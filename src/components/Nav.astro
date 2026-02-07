@@ -1,6 +1,8 @@
 ---
 import Container from "./Container.astro";
 import Button from "./Button.astro";
+import logoSvg from "../assets/enfoque-ppp.svg";
+import logoPng from "../assets/enfoque-ppp.png";
 
 const links = [
   { href: "/#servicios", label: "Servicios" },
@@ -11,6 +13,7 @@ const links = [
 ];
 
 const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
+const logoSrc = logoSvg ?? logoPng;
 ---
 
 <header
@@ -22,13 +25,26 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       <!-- Brand lockup -->
       <a
         href="/"
-        class="block rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors"
+        aria-label="Ir a inicio"
+        class="flex items-center gap-3 min-w-0 max-w-[200px] rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors sm:max-w-[260px]"
       >
-        <span class="block font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-blue">
-          Enfoque en Medios Publicitarios
+        <span class="flex items-center justify-center rounded-xl border border-border bg-surface p-1.5 shadow-sm">
+          <img
+            src={logoSrc}
+            alt="Enfoque en Medios Publicitarios"
+            class="h-7 w-7 object-contain sm:h-8 sm:w-8"
+          />
         </span>
-        <span class="mt-0.5 block text-xs text-text-muted">
-          Publicidad impresa • Producción • Instalación
+        <span class="flex min-w-0 flex-col leading-tight">
+          <span
+            class="truncate text-[13px] font-semibold leading-tight text-text-primary transition-colors hover:text-brand-blue md:text-sm"
+            title="Enfoque en Medios Publicitarios"
+          >
+            Enfoque en Medios Publicitarios
+          </span>
+          <span class="hidden truncate text-[11px] leading-tight text-text-muted sm:block">
+            Publicidad impresa • Producción • Instalación
+          </span>
         </span>
       </a>
 
