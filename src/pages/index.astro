@@ -3,10 +3,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
+import ContactPreview from "../components/ContactPreview.astro";
+import AboutPreview from "../components/AboutPreview.astro";
 import PortfolioPreview from "../components/PortfolioPreview.astro";
 import ProcessPreview from "../components/ProcessPreview.astro";
 import Footer from "../components/Footer.astro";
-import Container from "../components/Container.astro";
 ---
 
 <BaseLayout
@@ -20,6 +21,8 @@ import Container from "../components/Container.astro";
     <ServicesPreview />
     <PortfolioPreview />
     <ProcessPreview />
+    <AboutPreview />
+    <ContactPreview />
 
     <!-- Placeholder sections (to be implemented) -->
     <section id="nosotros" class="border-t border-border py-16 md:py-20" aria-labelledby="nosotros-heading">

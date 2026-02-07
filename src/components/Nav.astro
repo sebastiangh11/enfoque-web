@@ -5,9 +5,9 @@ import logoMark from "../assets/enfoque-ppp.svg";
 
 const links = [
   { href: "/#servicios", label: "Servicios" },
-  { href: "/#portafolio", label: "Portafolio" },
-  { href: "/#proceso", label: "Proceso" },
   { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#proceso", label: "Proceso" },
+  { href: "/#portafolio", label: "Portafolio" },
   { href: "/#contacto", label: "Contacto" },
 ];
 
@@ -187,7 +187,7 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
 
     if (!header || !menuButton || !menuPanel || !iconOpen || !iconClose) return;
 
-    const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
+    const sectionIds = ["servicios", "nosotros", "proceso", "portafolio", "contacto"];
 
     function setActiveBySectionId(id) {
       const targetHref = id ? `/#${id}` : null;
