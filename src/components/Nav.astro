@@ -13,32 +13,38 @@ const links = [
 const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
 ---
 
-<header id="nav-header" class="nav-header sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-md transition-shadow duration-200">
+<header
+  id="nav-header"
+  class="nav-header sticky top-0 z-50 border-b border-border bg-surface/80 backdrop-blur-md transition-all duration-200"
+>
   <nav class="relative py-3" aria-label="Navegación principal">
     <Container as="div" class="flex flex-wrap items-center justify-between gap-4">
       <!-- Brand lockup -->
       <a
         href="/"
-        class="block transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 rounded"
+        class="block rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors"
       >
-        <span class="font-semibold tracking-tight text-text-primary hover:text-brand-blue block">
+        <span class="block font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-blue">
           Enfoque en Medios Publicitarios
         </span>
-        <span class="text-xs text-text-muted mt-0.5 block">
+        <span class="mt-0.5 block text-xs text-text-muted">
           Publicidad impresa • Producción • Instalación
         </span>
       </a>
 
       <!-- Desktop: links + CTAs -->
       <div class="hidden items-center gap-6 lg:flex">
-        {links.map((l) => (
-          <a
-            href={l.href}
-            class="nav-desktop-link relative text-sm font-medium text-text-muted hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 rounded pb-0.5 border-b-2 border-transparent hover:border-brand-orange data-[active=true]:text-text-primary data-[active=true]:border-brand-orange"
-          >
-            {l.label}
-          </a>
-        ))}
+        <div class="flex items-center gap-4">
+          {links.map((l) => (
+            <a
+              href={l.href}
+              data-nav-link
+              class="nav-link relative rounded text-sm font-semibold text-text-muted transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            >
+              <span class="relative z-10">{l.label}</span>
+            </a>
+          ))}
+        </div>
         <div class="ml-2 flex items-center gap-2">
           <Button href="/#contacto" variant="primary" size="sm">
             Cotizar proyecto
@@ -47,10 +53,10 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            class="inline-flex items-center justify-center rounded-full border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-all hover:bg-brand-blue/10 hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             aria-label="Hablar por WhatsApp"
           >
-            Hablar por WhatsApp
+            WhatsApp
           </a>
         </div>
       </div>
@@ -63,7 +69,7 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
         <button
           id="nav-menu-button"
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text-primary hover:bg-surface-soft focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+          class="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface-soft focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
           aria-expanded="false"
           aria-controls="nav-menu-panel"
           aria-label="Abrir menú"
@@ -81,7 +87,7 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
     <!-- Mobile menu panel -->
     <div
       id="nav-menu-panel"
-      class="nav-menu-panel absolute left-0 right-0 top-full z-40 border-t border-border bg-surface lg:hidden transition-all duration-200 ease-out opacity-0 -translate-y-2 pointer-events-none"
+      class="nav-menu-panel absolute left-0 right-0 top-full z-40 border-t border-border bg-surface lg:hidden transition-[opacity,transform] duration-200 ease-out opacity-0 -translate-y-3 pointer-events-none"
       role="dialog"
       aria-label="Menú de navegación"
       aria-hidden="true"
@@ -92,7 +98,8 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
             <li>
               <a
                 href={l.href}
-                class="nav-mobile-link block rounded-lg px-4 py-3 text-text-secondary hover:bg-surface-soft hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-inset"
+                data-nav-link
+                class="nav-mobile-link block rounded-xl px-4 py-3 text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-inset"
               >
                 {l.label}
               </a>
@@ -107,10 +114,10 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center justify-center rounded-lg border-2 border-brand-blue px-6 py-3 text-base font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 w-full"
+            class="inline-flex w-full items-center justify-center rounded-xl border-2 border-brand-blue px-6 py-3 text-base font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             aria-label="Hablar por WhatsApp"
           >
-            Hablar por WhatsApp
+            WhatsApp
           </a>
         </div>
       </div>
@@ -120,8 +127,35 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
 
 <style>
   .nav-header[data-scrolled="true"] {
-    background-color: color-mix(in srgb, var(--surface) 97%, transparent);
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+    background-color: color-mix(in srgb, var(--surface) 96%, transparent);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+  }
+
+  .nav-link {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.35rem;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--brand-orange), color-mix(in srgb, var(--brand-orange) 40%, var(--brand-blue)));
+    transition: transform 220ms ease;
+  }
+
+  .nav-link[data-active="true"],
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link[data-active="true"]::after,
+  .nav-link:hover::after {
+    transform: scaleX(1);
   }
 
   .nav-menu-panel.nav-menu-open {
@@ -142,8 +176,24 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
     const menuPanel = document.getElementById("nav-menu-panel");
     const iconOpen = document.getElementById("nav-icon-open");
     const iconClose = document.getElementById("nav-icon-close");
+    const navLinks = document.querySelectorAll("[data-nav-link]");
 
     if (!header || !menuButton || !menuPanel || !iconOpen || !iconClose) return;
+
+    const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
+
+    function setActiveBySectionId(id) {
+      const targetHref = id ? `/#${id}` : null;
+      navLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        link.setAttribute("data-active", href && targetHref && href === targetHref ? "true" : "false");
+      });
+    }
+
+    function setActiveByHash() {
+      const hash = window.location.hash.slice(1) || "";
+      setActiveBySectionId(hash || null);
+    }
 
     // --- Scrolled state ---
     let scrollTicking = false;
@@ -163,56 +213,25 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
     updateScrolled();
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // --- Active desktop link (hash) ---
-    const desktopLinks = document.querySelectorAll(".nav-desktop-link");
-    function setActiveLink() {
-      const hash = window.location.hash || "";
-      const targetHref = hash ? `/#${hash.slice(1)}` : null;
-      desktopLinks.forEach((link) => {
-        const href = link.getAttribute("href");
-        const active = href && targetHref && href === targetHref;
-        link.setAttribute("data-active", active ? "true" : "false");
-      });
-    }
-    setActiveLink();
-    window.addEventListener("hashchange", setActiveLink);
+    // --- Active links (hash + scroll-spy) ---
+    setActiveByHash();
+    window.addEventListener("hashchange", setActiveByHash);
 
-    // --- Scroll-spy: IntersectionObserver for section ids ---
-    const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
-    function setActiveBySectionId(id) {
-      const targetHref = `/#${id}`;
-      desktopLinks.forEach((link) => {
-        const href = link.getAttribute("href");
-        link.setAttribute("data-active", href === targetHref ? "true" : "false");
-      });
-    }
     try {
       const observer = new IntersectionObserver(
         (entries) => {
-          const intersecting = entries.filter((e) => e.isIntersecting && e.target.id);
-          if (intersecting.length === 0) return;
-          const best = intersecting.reduce((a, b) => (a.intersectionRatio >= b.intersectionRatio ? a : b));
+          const visible = entries.filter((entry) => entry.isIntersecting && entry.target.id);
+          if (visible.length === 0) return;
+          const best = visible.reduce((a, b) => (a.intersectionRatio >= b.intersectionRatio ? a : b));
           setActiveBySectionId(best.target.id);
         },
-        { threshold: 0.4 }
+        { root: null, rootMargin: "0px 0px -45% 0px", threshold: [0.2, 0.4, 0.6, 0.8] }
       );
       sectionIds.forEach((id) => {
         const el = document.getElementById(id);
         if (el) observer.observe(el);
       });
     } catch (_) {}
-
-    desktopLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        const href = link.getAttribute("href");
-        if (href && href.startsWith("/#")) {
-          link.setAttribute("data-active", "true");
-          desktopLinks.forEach((l) => {
-            if (l !== link) l.setAttribute("data-active", "false");
-          });
-        }
-      });
-    });
 
     // --- Mobile menu ---
     function openMenu() {
@@ -243,14 +262,14 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       link.addEventListener("click", closeMenu);
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
     });
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", (event) => {
       const expanded = menuButton.getAttribute("aria-expanded") === "true";
       if (!expanded) return;
-      const target = e.target;
+      const target = event.target;
       if (target && !menuPanel.contains(target) && target !== menuButton && !menuButton.contains(target)) {
         closeMenu();
       }
