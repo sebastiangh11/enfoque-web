@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@theme {
+  --color-enfoque-orange: #F28500;
+  --color-enfoque-indigo: #2E2A78;
+  --color-enfoque-green: #009245;
+}

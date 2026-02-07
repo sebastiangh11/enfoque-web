@@ -1,0 +1,38 @@
+---
+const links = [
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#portafolio", label: "Portafolio" },
+  { href: "/#proceso", label: "Proceso" },
+  { href: "/#contacto", label: "Contacto" },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    
+    <!-- Logo / Brand -->
+    <a href="/" class="font-semibold tracking-tight text-neutral-900">
+      Enfoque en Medios Publicitarios
+    </a>
+
+    <!-- Links -->
+    <div class="hidden items-center gap-6 md:flex">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="text-sm text-neutral-700 hover:text-neutral-900 transition"
+        >
+          {l.label}
+        </a>
+      ))}
+
+      <!-- CTA -->
+      <a
+        href="/#contacto"
+        class="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+      >
+        Cotizar
+      </a>
+    </div>
+  </nav>
+</header>
