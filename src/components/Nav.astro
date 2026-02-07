@@ -1,6 +1,7 @@
 ---
 import Container from "./Container.astro";
 import Button from "./Button.astro";
+import logoMark from "../assets/enfoque-ppp.svg";
 
 const links = [
   { href: "/#servicios", label: "Servicios" },
@@ -22,13 +23,19 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       <!-- Brand lockup -->
       <a
         href="/"
-        class="block rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors"
+        aria-label="Ir a inicio"
+        class="flex items-center gap-3 rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors"
       >
-        <span class="block font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-blue">
-          Enfoque en Medios Publicitarios
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-white p-1 sm:h-9 sm:w-9">
+          <img src={logoMark} alt="Enfoque en Medios Publicitarios" class="h-full w-full object-contain" />
         </span>
-        <span class="mt-0.5 block text-xs text-text-muted">
-          Publicidad impresa • Producción • Instalación
+        <span class="flex flex-col leading-tight">
+          <span class="block text-sm font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-blue sm:text-base">
+            Enfoque en Medios Publicitarios
+          </span>
+          <span class="hidden text-xs text-text-muted sm:block">
+            Publicidad impresa • Producción • Instalación
+          </span>
         </span>
       </a>
 
