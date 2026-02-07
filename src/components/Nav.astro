@@ -1,38 +1,265 @@
 ---
+import Container from "./Container.astro";
+import Button from "./Button.astro";
+
 const links = [
   { href: "/#servicios", label: "Servicios" },
   { href: "/#portafolio", label: "Portafolio" },
   { href: "/#proceso", label: "Proceso" },
+  { href: "/#nosotros", label: "Nosotros" },
   { href: "/#contacto", label: "Contacto" },
 ];
+
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
 ---
 
-<header class="sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    
-    <!-- Logo / Brand -->
-    <a href="/" class="font-semibold tracking-tight text-neutral-900">
-      Enfoque en Medios Publicitarios
-    </a>
-
-    <!-- Links -->
-    <div class="hidden items-center gap-6 md:flex">
-      {links.map((l) => (
-        <a
-          href={l.href}
-          class="text-sm text-neutral-700 hover:text-neutral-900 transition"
-        >
-          {l.label}
-        </a>
-      ))}
-
-      <!-- CTA -->
+<header id="nav-header" class="nav-header sticky top-0 z-50 border-b border-border bg-surface/90 backdrop-blur-md transition-shadow duration-200">
+  <nav class="relative py-3" aria-label="Navegación principal">
+    <Container as="div" class="flex flex-wrap items-center justify-between gap-4">
+      <!-- Brand lockup -->
       <a
-        href="/#contacto"
-        class="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition"
+        href="/"
+        class="block transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 rounded"
       >
-        Cotizar
+        <span class="font-semibold tracking-tight text-text-primary hover:text-brand-blue block">
+          Enfoque en Medios Publicitarios
+        </span>
+        <span class="text-xs text-text-muted mt-0.5 block">
+          Publicidad impresa • Producción • Instalación
+        </span>
       </a>
+
+      <!-- Desktop: links + CTAs -->
+      <div class="hidden items-center gap-6 lg:flex">
+        {links.map((l) => (
+          <a
+            href={l.href}
+            class="nav-desktop-link relative text-sm font-medium text-text-muted hover:text-text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 rounded pb-0.5 border-b-2 border-transparent hover:border-brand-orange data-[active=true]:text-text-primary data-[active=true]:border-brand-orange"
+          >
+            {l.label}
+          </a>
+        ))}
+        <div class="ml-2 flex items-center gap-2">
+          <Button href="/#contacto" variant="primary" size="sm">
+            Cotizar proyecto
+          </Button>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-lg border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            aria-label="Hablar por WhatsApp"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile: hamburger -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <Button href="/#contacto" variant="primary" size="sm">
+          Cotizar
+        </Button>
+        <button
+          id="nav-menu-button"
+          type="button"
+          class="flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text-primary hover:bg-surface-soft focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+          aria-expanded="false"
+          aria-controls="nav-menu-panel"
+          aria-label="Abrir menú"
+        >
+          <svg id="nav-icon-open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="nav-icon-close" class="hidden h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </Container>
+
+    <!-- Mobile menu panel -->
+    <div
+      id="nav-menu-panel"
+      class="nav-menu-panel absolute left-0 right-0 top-full z-40 border-t border-border bg-surface lg:hidden transition-all duration-200 ease-out opacity-0 -translate-y-2 pointer-events-none"
+      role="dialog"
+      aria-label="Menú de navegación"
+      aria-hidden="true"
+    >
+      <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+        <ul class="flex flex-col gap-1" role="list">
+          {links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="nav-mobile-link block rounded-lg px-4 py-3 text-text-secondary hover:bg-surface-soft hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-inset"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-4 flex flex-col gap-2 border-t border-border pt-4">
+          <Button href="/#contacto" variant="primary" size="md" class="w-full">
+            Cotizar proyecto
+          </Button>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center rounded-lg border-2 border-brand-blue px-6 py-3 text-base font-semibold text-brand-blue transition-colors hover:bg-brand-blue/5 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 w-full"
+            aria-label="Hablar por WhatsApp"
+          >
+            Hablar por WhatsApp
+          </a>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
+
+<style>
+  .nav-header[data-scrolled="true"] {
+    background-color: color-mix(in srgb, var(--surface) 97%, transparent);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+  }
+
+  .nav-menu-panel.nav-menu-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-menu-panel.nav-menu-open[aria-hidden="false"] {
+    visibility: visible;
+  }
+</style>
+
+<script>
+  function initNav() {
+    const header = document.getElementById("nav-header");
+    const menuButton = document.getElementById("nav-menu-button");
+    const menuPanel = document.getElementById("nav-menu-panel");
+    const iconOpen = document.getElementById("nav-icon-open");
+    const iconClose = document.getElementById("nav-icon-close");
+
+    if (!header || !menuButton || !menuPanel || !iconOpen || !iconClose) return;
+
+    // --- Scrolled state ---
+    let scrollTicking = false;
+    function updateScrolled() {
+      const isScrolled = window.scrollY > 10;
+      header.setAttribute("data-scrolled", isScrolled ? "true" : "false");
+    }
+    function onScroll() {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          updateScrolled();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }
+    updateScrolled();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // --- Active desktop link (hash) ---
+    const desktopLinks = document.querySelectorAll(".nav-desktop-link");
+    function setActiveLink() {
+      const hash = window.location.hash || "";
+      const targetHref = hash ? `/#${hash.slice(1)}` : null;
+      desktopLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        const active = href && targetHref && href === targetHref;
+        link.setAttribute("data-active", active ? "true" : "false");
+      });
+    }
+    setActiveLink();
+    window.addEventListener("hashchange", setActiveLink);
+
+    // --- Scroll-spy: IntersectionObserver for section ids ---
+    const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
+    function setActiveBySectionId(id) {
+      const targetHref = `/#${id}`;
+      desktopLinks.forEach((link) => {
+        const href = link.getAttribute("href");
+        link.setAttribute("data-active", href === targetHref ? "true" : "false");
+      });
+    }
+    try {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const intersecting = entries.filter((e) => e.isIntersecting && e.target.id);
+          if (intersecting.length === 0) return;
+          const best = intersecting.reduce((a, b) => (a.intersectionRatio >= b.intersectionRatio ? a : b));
+          setActiveBySectionId(best.target.id);
+        },
+        { threshold: 0.4 }
+      );
+      sectionIds.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    } catch (_) {}
+
+    desktopLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("/#")) {
+          link.setAttribute("data-active", "true");
+          desktopLinks.forEach((l) => {
+            if (l !== link) l.setAttribute("data-active", "false");
+          });
+        }
+      });
+    });
+
+    // --- Mobile menu ---
+    function openMenu() {
+      menuPanel.classList.add("nav-menu-open");
+      menuPanel.setAttribute("aria-hidden", "false");
+      menuButton.setAttribute("aria-expanded", "true");
+      menuButton.setAttribute("aria-label", "Cerrar menú");
+      iconOpen.classList.add("hidden");
+      iconClose.classList.remove("hidden");
+    }
+
+    function closeMenu() {
+      menuPanel.classList.remove("nav-menu-open");
+      menuPanel.setAttribute("aria-hidden", "true");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Abrir menú");
+      iconOpen.classList.remove("hidden");
+      iconClose.classList.add("hidden");
+    }
+
+    menuButton.addEventListener("click", () => {
+      const expanded = menuButton.getAttribute("aria-expanded") === "true";
+      if (expanded) closeMenu();
+      else openMenu();
+    });
+
+    menuPanel.querySelectorAll(".nav-mobile-link").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    document.addEventListener("click", (e) => {
+      const expanded = menuButton.getAttribute("aria-expanded") === "true";
+      if (!expanded) return;
+      const target = e.target;
+      if (target && !menuPanel.contains(target) && target !== menuButton && !menuButton.contains(target)) {
+        closeMenu();
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNav);
+  } else {
+    initNav();
+  }
+</script>

@@ -1,7 +1,47 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Design tokens (60/30/10: whites/grays, blue structure, orange CTAs, green badges)
+   --------------------------------------------------------------------------- */
+:root {
+  /* Brand */
+  --brand-orange: #f58220;
+  --brand-orange-hover: #e06f0e;
+  --brand-blue: #2e2a7b;
+  --brand-blue-hover: #242062;
+  --accent-green: #009640;
+
+  /* Surfaces */
+  --surface: #ffffff;
+  --surface-soft: #f6f7f9;
+
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-secondary: #4b4b4b;
+  --text-muted: #7a7a7a;
+
+  /* Border */
+  --border: #e3e5e8;
+}
+
+/* Tailwind v4 @theme: semantic utility classes from CSS variables */
 @theme {
-  --color-enfoque-orange: #F28500;
-  --color-enfoque-indigo: #2E2A78;
-  --color-enfoque-green: #009245;
+  /* Brand colors */
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-hover: var(--brand-orange-hover);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-hover: var(--brand-blue-hover);
+  --color-accent-green: var(--accent-green);
+
+  /* Surfaces */
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+
+  /* Text (use as text-text-primary, etc.) */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  /* Border */
+  --color-border: var(--border);
 }
