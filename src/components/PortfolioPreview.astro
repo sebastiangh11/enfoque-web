@@ -1,0 +1,73 @@
+---
+import Container from "./Container.astro";
+import Button from "./Button.astro";
+
+const projects = [
+  {
+    title: "Stand corporativo – Expo CDMX",
+    category: "Stands • Eventos",
+  },
+  {
+    title: "Señalización interior – Torre Reforma",
+    category: "Señalización • Corporativo",
+  },
+  {
+    title: "Isla promocional – Retail Monterrey",
+    category: "Retail • Exhibición",
+  },
+  {
+    title: "Impresión gran formato – Plaza GDL",
+    category: "Impresión • Gran formato",
+  },
+  {
+    title: "Pop-up premium – Lanzamiento marca",
+    category: "Branding • Experiencias",
+  },
+  {
+    title: "Backwall modular – Expo Guadalajara",
+    category: "Eventos • Modular",
+  },
+];
+---
+
+<section id="portafolio" class="relative overflow-hidden border-t border-border py-16 md:py-20">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_top,color-mix(in_srgb,var(--brand-blue)_8%,transparent),transparent_55%),radial-gradient(circle_at_15%_20%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_45%),radial-gradient(circle_at_85%_10%,color-mix(in_srgb,var(--brand-blue)_6%,transparent),transparent_45%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container class="relative">
+    <div class="text-center">
+      <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">PORTAFOLIO</p>
+      <h2 class="mt-3 text-3xl font-bold text-text-primary md:text-4xl">
+        Proyectos que hacen visible tu marca
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-text-secondary">
+        Una muestra de stands, señalización e impresión premium entregada a empresas en todo México.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => (
+        <article class="group flex h-full flex-col rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md">
+          <div class="relative overflow-hidden rounded-2xl border border-border">
+            <div class="flex h-40 w-full items-center justify-center bg-gradient-to-br from-brand-blue/10 via-surface-soft to-brand-orange/10">
+              <span class="text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary">Proyecto</span>
+            </div>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-text-primary">{project.title}</h3>
+          <p class="mt-2 text-sm text-text-secondary">{project.category}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <Button href="/#contacto" variant="primary" size="md">
+        Cotizar proyecto
+      </Button>
+      <Button href="/portafolio" variant="secondary" size="md">
+        Ver portafolio completo
+      </Button>
+    </div>
+  </Container>
+</section>
