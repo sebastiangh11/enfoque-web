@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
+import ProcessPreview from "../components/ProcessPreview.astro";
 import Footer from "../components/Footer.astro";
 import Container from "../components/Container.astro";
 ---
@@ -16,23 +17,13 @@ import Container from "../components/Container.astro";
   <main>
     <Hero />
     <ServicesPreview />
+    <ProcessPreview />
 
     <!-- Placeholder sections (to be implemented) -->
     <section id="portafolio" class="border-t border-border py-16 md:py-20" aria-labelledby="portafolio-heading">
       <Container>
         <h2 id="portafolio-heading" class="text-center text-3xl font-bold text-text-primary md:text-4xl">
           Portafolio
-        </h2>
-        <p class="mx-auto mt-3 max-w-2xl text-center text-text-secondary">
-          Próximamente.
-        </p>
-      </Container>
-    </section>
-
-    <section id="proceso" class="border-t border-border bg-surface-soft py-16 md:py-20" aria-labelledby="proceso-heading">
-      <Container>
-        <h2 id="proceso-heading" class="text-center text-3xl font-bold text-text-primary md:text-4xl">
-          Proceso
         </h2>
         <p class="mx-auto mt-3 max-w-2xl text-center text-text-secondary">
           Próximamente.
