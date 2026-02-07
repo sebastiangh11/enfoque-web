@@ -1,0 +1,154 @@
+---
+import Container from "./Container.astro";
+
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
+---
+
+<section id="contacto" class="relative overflow-hidden border-t border-border py-16 md:py-20">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_top,color-mix(in_srgb,var(--brand-blue)_8%,transparent),transparent_55%),radial-gradient(circle_at_20%_15%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_45%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container class="relative">
+    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">COTIZACIÓN</p>
+        <h2 class="mt-3 text-3xl font-bold text-text-primary md:text-4xl">
+          Cotiza tu proyecto en menos de 24 horas.
+        </h2>
+        <p class="mt-4 text-text-secondary">
+          Ayudamos a empresas de todo México a producir publicidad impresa premium con entregas rápidas e instalación experta.
+        </p>
+
+        <ul class="mt-6 space-y-3 text-sm text-text-secondary">
+          <li class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364-6.364-2.121 2.121M8.757 15.243l-2.121 2.121m0-11.314 2.121 2.121m8.486 8.486 2.121 2.121" />
+              </svg>
+            </span>
+            <span>+30 años de experiencia</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </span>
+            <span>Producción e instalación profesional</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span>Atención rápida por WhatsApp</span>
+          </li>
+        </ul>
+
+        <div class="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+          <p class="text-sm font-semibold text-text-primary">Respuesta rápida en horario laboral.</p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 inline-flex w-full items-center justify-center rounded-full border-2 border-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 sm:w-auto"
+          >
+            Hablar por WhatsApp ahora
+          </a>
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-8">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-text-secondary">
+          Cuéntanos qué necesitas y te enviamos una propuesta personalizada.
+        </p>
+
+        <form class="mt-6 grid gap-4" aria-label="Formulario de cotización">
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Nombre completo
+            <input
+              type="text"
+              name="nombre"
+              required
+              placeholder="Tu nombre"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Empresa
+            <input
+              type="text"
+              name="empresa"
+              placeholder="Empresa (opcional)"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Email
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="tu@empresa.com"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Teléfono / WhatsApp
+            <input
+              type="tel"
+              name="telefono"
+              required
+              placeholder="55 0000 0000"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Servicio
+            <select
+              name="servicio"
+              required
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            >
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option>Stands y exposiciones</option>
+              <option>Señalización corporativa</option>
+              <option>Impresión gran formato</option>
+              <option>Regalos corporativos</option>
+              <option>Producción personalizada</option>
+            </select>
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Mensaje
+            <textarea
+              name="mensaje"
+              required
+              rows={4}
+              placeholder="Cuéntanos lo que necesitas"
+              class="w-full resize-none rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            ></textarea>
+          </label>
+
+          <button
+            type="submit"
+            class="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-orange/90 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+          >
+            Enviar solicitud de cotización
+          </button>
+
+          <p class="hidden text-center text-sm font-semibold text-brand-blue" data-success-message>
+            Gracias. Te contactaremos muy pronto.
+          </p>
+        </form>
+      </div>
+    </div>
+  </Container>
+</section>
