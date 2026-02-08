@@ -4,77 +4,83 @@ import Container from "./Container.astro";
 const whatsappBaseUrl = "https://wa.me/525574570826";
 ---
 
-<section id="contacto" class="relative overflow-hidden border-t border-border py-16 md:py-20">
+<section id="contacto" class="relative overflow-hidden border-t border-border py-20 md:py-24">
   <div
-    class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_top,color-mix(in_srgb,var(--brand-blue)_8%,transparent),transparent_55%),radial-gradient(circle_at_20%_15%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_45%)]"
+    class="pointer-events-none absolute inset-0 opacity-95 [background:radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_10%,white),transparent_45%),radial-gradient(circle_at_86%_0%,color-mix(in_srgb,var(--brand-orange)_6%,white),transparent_36%),linear-gradient(180deg,white_0%,color-mix(in_srgb,var(--brand-orange)_3%,white)_100%)]"
     aria-hidden="true"
   ></div>
 
   <Container class="relative">
-    <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <div class="space-y-6">
-        <div class="space-y-3">
-          <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">CONVERSIÓN</p>
-          <h2 class="text-3xl font-bold text-text-primary md:text-4xl">
+    <div class="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-start lg:gap-12">
+      <div class="space-y-8">
+        <div class="space-y-4">
+          <h2 class="max-w-2xl text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
             Producción de branding físico para empresas en México.
           </h2>
-          <p class="text-text-secondary">
+          <p class="max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
             Atendemos corporativos, medianas empresas, PYMEs y retailers. Nos aventamos cualquier proyecto y entregamos
             propuestas claras para arrancar rápido.
           </p>
         </div>
 
         <ul class="grid gap-3 text-sm text-text-secondary sm:grid-cols-2">
-          <li class="flex items-center gap-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M3 7h18M3 12h18M3 17h18" />
               </svg>
             </span>
             <span>Atendemos corporativos y PYMEs</span>
           </li>
-          <li class="flex items-center gap-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m4-4H8" />
-              </svg>
-            </span>
-            <span>Producción rápida</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M5 13l4 4L19 7" />
               </svg>
             </span>
             <span>Calidad premium</span>
           </li>
-          <li class="flex items-center gap-3">
-            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M13 5l7 7-7 7M4 12h16" />
+              </svg>
+            </span>
+            <span>Producción rápida</span>
+          </li>
+          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M12 6v12m6-6H6" />
               </svg>
             </span>
             <span>Nos adaptamos a cualquier proyecto</span>
           </li>
         </ul>
 
-        <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-          <p class="text-sm font-semibold text-text-primary">Contacto directo</p>
-          <div class="mt-4 flex flex-wrap gap-3 text-sm">
+        <div class="rounded-2xl border border-border bg-surface p-5 shadow-sm md:p-6">
+          <p class="text-sm font-semibold text-text-primary">Contacto Directo</p>
+          <div class="mt-4 flex flex-wrap gap-3">
             <a
               href="mailto:ventas@segac.com.mx"
-              class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-semibold text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
+              class="inline-flex items-center gap-2 rounded-full border border-border bg-surface-soft px-4 py-2.5 text-sm font-semibold text-text-secondary transition-colors hover:border-brand-blue hover:text-brand-blue"
             >
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7l8.2 5.6a1.5 1.5 0 001.6 0L21 7M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
+              </svg>
               ventas@segac.com.mx
             </a>
             <a
               href={whatsappBaseUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-semibold text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
+              class="inline-flex items-center gap-2 rounded-full border border-accent-green/40 bg-accent-green/5 px-4 py-2.5 text-sm font-semibold text-accent-green transition-colors hover:border-accent-green hover:bg-accent-green/10"
             >
-              WhatsApp +52 55 7457 0826
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                <path d="M12.051 21.785h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 019.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+              </svg>
+              WhatsApp
             </a>
           </div>
         </div>
@@ -92,8 +98,8 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               type="text"
               name="nombre"
               required
-              placeholder="Tu nombre"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              placeholder="Juan Perez"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
 
@@ -103,8 +109,8 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               type="text"
               name="empresa"
               required
-              placeholder="Empresa"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              placeholder="Apple"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
 
@@ -114,8 +120,8 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               type="tel"
               name="telefono"
               required
-              placeholder="55 0000 0000"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              placeholder="+52 55 7457 0826"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
 
@@ -126,7 +132,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               name="email"
               required
               placeholder="tu@empresa.com"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
 
@@ -135,24 +141,26 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             <input
               type="text"
               name="ciudad"
-              placeholder="CDMX, Guadalajara, Monterrey"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              placeholder="CDMX, Guadalajara, Monterrey..."
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
 
           <label class="grid gap-2 text-sm font-semibold text-text-primary">
-            Tipo de proyecto
+            ¿Qué necesitas producir?
             <select
               name="tipoProyecto"
               required
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange"
             >
               <option value="" disabled selected>Selecciona una opción</option>
-              <option>Branding para oficinas</option>
-              <option>Retail y punto de venta</option>
-              <option>Eventos y activaciones</option>
-              <option>Señalización corporativa</option>
-              <option>Proyecto especial</option>
+              <option>Branding físico</option>
+              <option>Expo / stands</option>
+              <option>Papelería corporativa</option>
+              <option>Grabado láser</option>
+              <option>Impresión textil</option>
+              <option>Diseño gráfico</option>
+              <option>Otro</option>
             </select>
           </label>
 
@@ -162,15 +170,15 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               name="mensaje"
               required
               rows={4}
-              placeholder="Cuéntanos lo que necesitas"
-              class="w-full resize-none rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              placeholder="Ej: stand para expo en CDMX, entrega en 2 semanas..."
+              class="w-full resize-none rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             ></textarea>
           </label>
 
           <div class="mt-2 grid gap-3 sm:grid-cols-2">
             <button
               type="submit"
-              class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-orange/90 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-orange-hover hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             >
               Enviar solicitud de cotización
             </button>
@@ -179,12 +187,17 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               target="_blank"
               rel="noopener noreferrer"
               data-whatsapp-link
-              class="inline-flex w-full items-center justify-center rounded-full border-2 border-brand-blue px-6 py-4 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-accent-green bg-accent-green px-6 py-4 text-sm font-semibold text-white transition-colors hover:border-[#00853a] hover:bg-[#00853a] focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                <path d="M12.051 21.785h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 019.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+              </svg>
               Cotizar por WhatsApp
             </a>
           </div>
 
+          <p class="text-sm text-text-secondary">No compartimos tu información. Solo la usamos para cotizar tu proyecto.</p>
           <p class="text-sm text-text-secondary">Respuesta en menos de 24 hrs hábiles.</p>
         </form>
       </div>

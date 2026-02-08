@@ -4,108 +4,160 @@ import Button from "./Button.astro";
 
 const services = [
   {
-    slug: "stands",
-    title: "Stands para exposiciones",
-    description: "Diseño y fabricación de stands que elevan tu presencia en eventos.",
-    icon: "stands",
+    title: "Branding físico para empresas",
+    description: "Branding físico impecable para espacios corporativos.",
+    icon: "branding",
+    accent: "orange",
   },
   {
-    slug: "senalizacion",
-    title: "Señalización corporativa",
-    description: "Letreros, interiores y exteriores con acabados profesionales.",
-    icon: "senalizacion",
+    title: "Expo / stands corporativos",
+    description: "Presencia de alto nivel para ferias y expos clave.",
+    icon: "expo",
+    accent: "green",
   },
   {
-    slug: "impresion-gran-formato",
-    title: "Impresión gran formato",
-    description: "Lonas, espectaculares y materiales impresos de alto impacto.",
-    icon: "impresion",
+    title: "Papelería corporativa premium",
+    description: "Papelería ejecutiva con acabados premium y consistentes.",
+    icon: "paper",
+    accent: "orange",
   },
   {
-    slug: "viniles-rotulacion",
-    title: "Viniles y rotulación",
-    description: "Aplicaciones precisas para branding en espacios y vehículos.",
-    icon: "viniles",
+    title: "Grabado láser y personalización",
+    description: "Personalización láser precisa para piezas corporativas.",
+    icon: "laser",
+    accent: "green",
   },
   {
-    slug: "regalos-corporativos",
-    title: "Regalos corporativos premium",
-    description: "Artículos personalizados que fortalecen relaciones con clientes.",
-    icon: "regalos",
+    title: "Impresión textil profesional",
+    description: "Textiles profesionales para uniformes y activaciones.",
+    icon: "textil",
+    accent: "orange",
   },
   {
-    slug: "produccion-instalacion",
-    title: "Producción e instalación completa",
-    description: "Nos encargamos del proceso de principio a fin, sin fricciones.",
-    icon: "produccion",
+    title: "Diseño gráfico aplicado a producción",
+    description: "Diseño listo para producción, sin fricciones ni retrabajos.",
+    icon: "design",
+    accent: "green",
   },
 ];
 ---
 
-<section id="servicios" class="bg-surface-soft py-20" aria-labelledby="servicios-heading">
+<section id="servicios" class="bg-surface-soft py-24" aria-labelledby="servicios-heading">
   <Container>
-    <header class="text-center max-w-3xl mx-auto">
-      <h2 id="servicios-heading" class="text-3xl font-bold text-text-primary md:text-4xl">
+    <header class="mx-auto max-w-3xl text-center">
+      <h2 id="servicios-heading" class="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
         Servicios que hacen visible tu marca
       </h2>
-      <p class="mt-4 text-lg text-text-secondary">
-        Desde stands y señalización hasta producción e instalación completa, ejecutamos proyectos físicos con calidad premium.
+      <p class="mt-5 text-base leading-relaxed text-text-secondary md:text-lg">
+        Impulsamos proyectos para corporativos, pymes y retail con ejecución precisa para retos físicos complejos.
+      </p>
+      <p class="mt-4 text-sm font-medium text-text-muted md:text-base">
+        ¿Proyecto complejo? Nosotros lo resolvemos sin fricción.
       </p>
     </header>
 
-    <ul class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
-      {services.map((s) => (
+    <ul class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3" role="list">
+      {services.map((service) => (
         <li>
           <a
-            href={`/servicios/${s.slug}`}
-            class="services-card group block h-full rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            href="/servicios"
+            class:list={[
+              "group relative isolate block h-full overflow-hidden rounded-2xl border bg-surface p-7 shadow-sm transition-all duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2",
+              "hover:-translate-y-1 hover:shadow-xl",
+              service.accent === "orange"
+                ? "border-border hover:border-brand-orange/45"
+                : "border-border hover:border-accent-green/45",
+            ]}
           >
-            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-surface-soft text-brand-blue transition-colors group-hover:bg-brand-orange/10 group-hover:text-brand-orange" aria-hidden="true">
-              {s.icon === "stands" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            <div
+              class:list={[
+                "pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100",
+                service.accent === "orange"
+                  ? "bg-[radial-gradient(circle_at_14%_14%,color-mix(in_srgb,var(--brand-orange)_14%,transparent),transparent_44%),radial-gradient(circle_at_86%_88%,color-mix(in_srgb,var(--brand-blue)_12%,transparent),transparent_45%),linear-gradient(135deg,color-mix(in_srgb,var(--brand-orange)_7%,white),white_58%)]"
+                  : "bg-[radial-gradient(circle_at_14%_14%,color-mix(in_srgb,var(--accent-green)_15%,transparent),transparent_44%),radial-gradient(circle_at_86%_88%,color-mix(in_srgb,var(--brand-blue)_10%,transparent),transparent_45%),linear-gradient(135deg,color-mix(in_srgb,var(--accent-green)_7%,white),white_58%)]",
+              ]}
+              aria-hidden="true"
+            ></div>
+            <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white/95 to-white/98" aria-hidden="true"></div>
+
+            <div
+              class:list={[
+                "relative z-10 flex h-12 w-12 items-center justify-center rounded-2xl border bg-surface-soft text-brand-blue transition-all duration-300",
+                service.accent === "orange"
+                  ? "border-brand-orange/15 group-hover:border-brand-orange/30 group-hover:bg-brand-orange/10 group-hover:text-brand-orange group-hover:ring-4 group-hover:ring-brand-orange/10"
+                  : "border-accent-green/20 group-hover:border-accent-green/35 group-hover:bg-accent-green/10 group-hover:text-accent-green group-hover:ring-4 group-hover:ring-accent-green/10",
+              ]}
+              aria-hidden="true"
+            >
+              {service.icon === "branding" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 7h16M7 4v6m10-6v6M6 12h12v7H6z" />
                 </svg>
               )}
-              {s.icon === "senalizacion" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              {service.icon === "expo" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 19h18M5 19V9l7-4 7 4v10M9 13h6" />
                 </svg>
               )}
-              {s.icon === "impresion" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5M9 21H7a2 2 0 01-2-2v-4a2 2 0 012-2h2.5M9 3H7a2 2 0 00-2 2v4a2 2 0 012 2h2.5M9 3h6v6M9 21v-6m0 6l3-3m-3 3l-3-3" />
+              {service.icon === "paper" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6" />
                 </svg>
               )}
-              {s.icon === "viniles" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              {service.icon === "laser" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v4m0 10v4M4 12h4m8 0h4M7 7l10 10M17 7 7 17" />
                 </svg>
               )}
-              {s.icon === "regalos" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 00-2 2v6a2 2 0 002 2h14a2 2 0 002-2v-6a2 2 0 00-2-2H5z" />
+              {service.icon === "textil" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 4l2 3h4l2-3 4 3-2 4v9H6v-9L4 7z" />
                 </svg>
               )}
-              {s.icon === "produccion" && (
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              {service.icon === "design" && (
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m4 16 8-8 4 4-8 8H4zM14 6l2-2 4 4-2 2" />
                 </svg>
               )}
-            </span>
-            <h3 class="mt-4 text-lg font-semibold text-text-primary">{s.title}</h3>
-            <p class="mt-2 text-sm text-text-secondary">{s.description}</p>
+            </div>
+
+            <h3 class="relative z-10 mt-5 text-lg font-semibold leading-tight text-text-primary">
+              {service.title}
+            </h3>
+            <p class="relative z-10 mt-3 text-sm leading-relaxed text-text-secondary">
+              {service.description}
+            </p>
           </a>
         </li>
       ))}
     </ul>
 
-    <div class="mt-14 flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
-      <Button href="/servicios" variant="primary" size="md">
-        Ver todos los servicios
-      </Button>
-      <Button href="/#contacto" variant="secondary" size="md">
+    <div class="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <Button href="/#contacto" variant="primary" size="md">
         Cotizar proyecto
       </Button>
+      <Button
+        href="https://wa.me/525574570826"
+        variant="ghost"
+        size="md"
+        class="border-2 !border-accent-green !bg-accent-green !text-white hover:!border-accent-green hover:!bg-accent-green/90 hover:!text-white"
+      >
+        <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+          <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+        </svg>
+        WhatsApp
+      </Button>
+    </div>
+
+    <div class="mt-5 text-center">
+      <a
+        href="/servicios"
+        class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+      >
+        Ver todos los servicios
+        <span class="ml-1" aria-hidden="true">→</span>
+      </a>
     </div>
   </Container>
 </section>
