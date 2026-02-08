@@ -15,6 +15,7 @@ interface LeadPayload {
 interface ApiSuccessResponse {
   ok: true;
   message: string;
+  notifyEmailSent: boolean;
   data: {
     contactId: string;
     companyId?: string;
@@ -97,13 +98,35 @@ const isRateLimited = (ip: string, now = Date.now()): boolean => {
   return entry.count > RATE_LIMIT_MAX_REQUESTS;
 };
 
-const buildDealName = (empresa: string, nombre: string): string => {
+const getLocalIsoDate = (): string => {
   const date = new Date();
-  const timestamp = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
-    date.getDate(),
-  ).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+};
 
-  return `Web Lead - ${empresa || nombre} - ${timestamp}`;
+const normalizeLeadFields = (payload: LeadPayload) => {
+  const nombre = text(payload.nombre) || "Sin nombre";
+  const empresa = text(payload.empresa) || "Sin empresa";
+  const telefonoWhatsapp = text(payload.telefono_whatsapp);
+  const email = text(payload.email) || "Sin email";
+  const ciudadEstado = text(payload.ciudad_estado) || "Sin ciudad";
+  const mensaje = text(payload.mensaje);
+  const empresaOrNombre = text(payload.empresa) || nombre || "Sin nombre";
+
+  return {
+    nombre,
+    empresa,
+    telefonoWhatsapp,
+    email,
+    ciudadEstado,
+    mensaje,
+    empresaOrNombre,
+    fecha: getLocalIsoDate(),
+  };
+};
+
+const buildDealName = (payload: LeadPayload): string => {
+  const normalized = normalizeLeadFields(payload);
+  return `Web Lead • ${normalized.empresaOrNombre} • ${normalized.ciudadEstado} • ${normalized.fecha}`;
 };
 
 const jsonResponse = (status: number, body: ApiSuccessResponse | ApiErrorResponse) =>
@@ -122,6 +145,21 @@ const getHubSpotToken = (): string => {
   }
   return token;
 };
+
+const getResendApiKey = (): string => text(import.meta.env.RESEND_API_KEY);
+
+const getNotificationTo = (): string => text(import.meta.env.LEAD_NOTIFY_TO) || "sebastian@segac.com.mx";
+
+const getNotificationFrom = (): string =>
+  text(import.meta.env.LEAD_NOTIFY_FROM) || "onboarding@resend.dev";
+
+const escapeHtml = (value: string): string =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 
 const hubspotFetch = async <T>(token: string, path: string, init?: RequestInit): Promise<T> => {
   const response = await fetch(`${HUBSPOT_API_BASE_URL}${path}`, {
@@ -142,6 +180,24 @@ const hubspotFetch = async <T>(token: string, path: string, init?: RequestInit):
   }
 
   return data as T;
+};
+
+const resendFetch = async (apiKey: string, body: Record<string, unknown>): Promise<void> => {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const data = (await response.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!response.ok) {
+    const message =
+      typeof data.message === "string" ? data.message : `Resend request failed (${response.status})`;
+    throw new Error(message);
+  }
 };
 
 const searchObjectByProperty = async (
@@ -225,19 +281,20 @@ const createDeal = async (token: string, payload: LeadPayload): Promise<string> 
   const dealstage = text(import.meta.env.HUBSPOT_STAGE_ID);
 
   if (!dealstage) {
-    throw new Error("Missing HUBSPOT_STAGE_ID");
+    throw new Error("Configuración incompleta: falta HUBSPOT_STAGE_ID.");
   }
 
+  const normalized = normalizeLeadFields(payload);
   const descriptionLines = [
-    `Mensaje: ${payload.mensaje}`,
-    `Ciudad/Estado: ${text(payload.ciudad_estado) || "-"}`,
-    `Teléfono/WhatsApp: ${payload.telefono_whatsapp}`,
-    `Nombre: ${payload.nombre}`,
-    `Empresa: ${text(payload.empresa) || "-"}`,
-    `Email: ${text(payload.email) || "-"}`,
+    `Nombre: ${normalized.nombre}`,
+    `Empresa: ${normalized.empresa}`,
+    `Teléfono/WhatsApp: ${normalized.telefonoWhatsapp}`,
+    `Email: ${normalized.email}`,
+    `Ciudad/Estado: ${normalized.ciudadEstado}`,
+    `Mensaje: ${normalized.mensaje}`,
   ];
 
-  const dealname = buildDealName(text(payload.empresa), payload.nombre);
+  const dealname = buildDealName(payload);
 
   const createdDeal = await hubspotFetch<HubSpotObjectResponse>(token, "/crm/v3/objects/deals", {
     method: "POST",
@@ -252,6 +309,77 @@ const createDeal = async (token: string, payload: LeadPayload): Promise<string> 
   });
 
   return createdDeal.id;
+};
+
+const sendLeadNotificationEmail = async (args: {
+  payload: LeadPayload;
+  contactId: string;
+  companyId?: string;
+  dealId: string;
+}): Promise<boolean> => {
+  const apiKey = getResendApiKey();
+  if (!apiKey) {
+    console.warn("[hubspot-lead] notification email skipped: RESEND_API_KEY is missing.");
+    return false;
+  }
+
+  const normalized = normalizeLeadFields(args.payload);
+  const safeDealName = escapeHtml(buildDealName(args.payload));
+  const safeNombre = escapeHtml(normalized.nombre);
+  const safeEmpresa = escapeHtml(normalized.empresa);
+  const safeTelefono = escapeHtml(normalized.telefonoWhatsapp);
+  const safeEmail = escapeHtml(normalized.email);
+  const safeCiudad = escapeHtml(normalized.ciudadEstado);
+  const safeMensaje = escapeHtml(normalized.mensaje).replace(/\n/g, "<br/>");
+  const safeContactId = escapeHtml(args.contactId);
+  const safeCompanyId = escapeHtml(args.companyId || "N/A");
+  const safeDealId = escapeHtml(args.dealId);
+  const subject = `Nuevo lead web: ${normalized.empresaOrNombre} — ${normalized.fecha}`;
+  const hubspotIds = [
+    `Contact ID: ${args.contactId}`,
+    `Company ID: ${args.companyId || "N/A"}`,
+    `Deal ID: ${args.dealId}`,
+  ].join("\n");
+
+  const html = `
+    <h2>Nuevo lead web</h2>
+    <p><strong>Deal name:</strong> ${safeDealName}</p>
+    <p><strong>Nombre:</strong> ${safeNombre}</p>
+    <p><strong>Empresa:</strong> ${safeEmpresa}</p>
+    <p><strong>Teléfono/WhatsApp:</strong> ${safeTelefono}</p>
+    <p><strong>Email:</strong> ${safeEmail}</p>
+    <p><strong>Ciudad/Estado:</strong> ${safeCiudad}</p>
+    <p><strong>Mensaje:</strong><br/>${safeMensaje}</p>
+    <p><strong>HubSpot IDs</strong><br/>
+      Contact ID: ${safeContactId}<br/>
+      Company ID: ${safeCompanyId}<br/>
+      Deal ID: ${safeDealId}
+    </p>
+  `.trim();
+
+  const textBody = [
+    "Nuevo lead web",
+    `Deal name: ${buildDealName(args.payload)}`,
+    `Nombre: ${normalized.nombre}`,
+    `Empresa: ${normalized.empresa}`,
+    `Teléfono/WhatsApp: ${normalized.telefonoWhatsapp}`,
+    `Email: ${normalized.email}`,
+    `Ciudad/Estado: ${normalized.ciudadEstado}`,
+    `Mensaje: ${normalized.mensaje}`,
+    "",
+    "HubSpot IDs",
+    hubspotIds,
+  ].join("\n");
+
+  await resendFetch(apiKey, {
+    from: getNotificationFrom(),
+    to: [getNotificationTo()],
+    subject,
+    html,
+    text: textBody,
+  });
+
+  return true;
 };
 
 const associateDefault = async (
@@ -329,6 +457,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       return jsonResponse(202, {
         ok: true,
         message: "Solicitud recibida.",
+        notifyEmailSent: false,
         data: { contactId: "hidden", dealId: "hidden" },
       });
     }
@@ -354,15 +483,31 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       await associateDefault(token, "contacts", contactId, "companies", companyId);
     }
 
+    let notifyEmailSent = false;
+    try {
+      notifyEmailSent = await sendLeadNotificationEmail({ payload, contactId, companyId, dealId });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "unknown error";
+      console.error("[hubspot-lead] notification email failed:", message);
+    }
+
     return jsonResponse(200, {
       ok: true,
       message: "Lead creado correctamente en HubSpot.",
+      notifyEmailSent,
       data: { contactId, companyId, dealId },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Error interno";
     // Safe log: never include token or full payload.
     console.error("[hubspot-lead] request failed:", message);
+
+    if (message === "Configuración incompleta: falta HUBSPOT_STAGE_ID.") {
+      return jsonResponse(500, {
+        ok: false,
+        error: message,
+      });
+    }
 
     return jsonResponse(500, {
       ok: false,

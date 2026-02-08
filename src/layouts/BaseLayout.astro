@@ -2,9 +2,20 @@
 import "../styles/global.css";
 
 const {
-  title = "Enfoque",
-  description = "Publicidad impresa y producción para marcas.",
+  title = "Enfoque en Medios Publicitarios | Branding físico y producción publicitaria en México",
+  description =
+    "Diseñamos y producimos materiales publicitarios premium para empresas en México. Cotiza por WhatsApp y recibe propuesta en 24 hrs hábiles.",
 } = Astro.props;
+
+const siteUrl = "https://enfoque-web.vercel.app/";
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Enfoque en Medios Publicitarios",
+  url: siteUrl,
+  telephone: "+525574570826",
+  areaServed: "MX",
+};
 ---
 
 <!doctype html>
@@ -15,6 +26,12 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
