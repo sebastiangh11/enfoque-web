@@ -1,46 +1,63 @@
-# Astro Starter Kit: Basics
+# Enfoque Web (Astro + Vercel)
 
-```sh
-npm create astro@latest -- --template basics
+Landing site built with Astro and deployed on Vercel.
+
+## Commands
+
+| Command | Action |
+| :-- | :-- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start local dev server (`http://localhost:4321`) |
+| `npm run build` | Build production output |
+| `npm run preview` | Preview production build locally |
+
+## HubSpot Lead Integration
+
+The contact form submits to `POST /api/hubspot/lead.json` (server-side Astro endpoint).
+
+### 1) Environment variables
+
+Copy `.env.example` to `.env` locally and configure:
+
+```bash
+HUBSPOT_PRIVATE_APP_TOKEN=your-hubspot-private-app-token
+HUBSPOT_PIPELINE_ID=default
+HUBSPOT_STAGE_ID=your-deal-stage-id
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### 2) Vercel setup
 
-## 🚀 Project Structure
+1. Open your Vercel project.
+2. Go to `Project Settings > Environment Variables`.
+3. Add:
+   - `HUBSPOT_PRIVATE_APP_TOKEN`
+   - `HUBSPOT_PIPELINE_ID`
+   - `HUBSPOT_STAGE_ID`
+4. Redeploy the project so serverless functions receive the new values.
 
-Inside of your Astro project, you'll see the following folders and files:
+## API Test (curl)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+Run against local dev server:
+
+```bash
+curl -X POST "http://localhost:4321/api/hubspot/lead.json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "nombre": "Juan Perez",
+    "empresa": "Apple",
+    "telefono_whatsapp": "+52 55 7457 0826",
+    "email": "juan@apple.com",
+    "ciudad_estado": "CDMX",
+    "mensaje": "Necesito branding físico para evento corporativo.",
+    "website": ""
+  }'
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Expected result in HubSpot:
+1. Contact created/updated (search by email first, then phone).
+2. Company created/updated when `empresa` is provided.
+3. Deal created in configured pipeline/stage.
+4. Associations:
+   - Deal <-> Contact
+   - Deal <-> Company (if company exists)
+   - Contact <-> Company (if company exists)

@@ -108,7 +108,6 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             <input
               type="text"
               name="empresa"
-              required
               placeholder="Apple"
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
@@ -118,7 +117,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             Teléfono / WhatsApp
             <input
               type="tel"
-              name="telefono"
+              name="telefono_whatsapp"
               required
               placeholder="+52 55 7457 0826"
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
@@ -130,7 +129,6 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             <input
               type="email"
               name="email"
-              required
               placeholder="tu@empresa.com"
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
@@ -140,7 +138,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             Ciudad / Estado (opcional)
             <input
               type="text"
-              name="ciudad"
+              name="ciudad_estado"
               placeholder="CDMX, Guadalajara, Monterrey..."
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3.5 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
@@ -175,12 +173,20 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             ></textarea>
           </label>
 
+          <div class="hidden" aria-hidden="true">
+            <label>
+              Website
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
           <div class="mt-2 grid gap-3 sm:grid-cols-2">
             <button
               type="submit"
+              data-submit-button
               class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-orange-hover hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             >
-              Enviar solicitud de cotización
+              <span data-submit-label>Enviar solicitud de cotización</span>
             </button>
             <a
               href={whatsappBaseUrl}
@@ -197,6 +203,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             </a>
           </div>
 
+          <p class="hidden text-sm font-semibold" data-form-feedback role="status" aria-live="polite"></p>
           <p class="text-sm text-text-secondary">No compartimos tu información. Solo la usamos para cotizar tu proyecto.</p>
           <p class="text-sm text-text-secondary">Respuesta en menos de 24 hrs hábiles.</p>
         </form>
@@ -208,6 +215,11 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
 <script>
   const form = document.querySelector("[data-contact-form]");
   const whatsappLink = document.querySelector("[data-whatsapp-link]");
+  const submitButton = document.querySelector("[data-submit-button]");
+  const submitLabel = document.querySelector("[data-submit-label]");
+  const feedback = document.querySelector("[data-form-feedback]");
+  const defaultSubmitText = submitLabel?.textContent || "Enviar solicitud de cotización";
+  const hubspotLeadEndpoint = "/api/hubspot/lead.json";
 
   const getFieldValue = (name) => {
     if (!form) return "";
@@ -218,57 +230,87 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
   const buildWhatsappMessage = () => {
     const nombre = getFieldValue("nombre");
     const empresa = getFieldValue("empresa");
-    const tipoProyecto = getFieldValue("tipoProyecto");
-    const ciudad = getFieldValue("ciudad");
     const mensaje = getFieldValue("mensaje");
 
-    return [
-      "Hola, me gustaría cotizar un proyecto.",
-      `Nombre: ${nombre || "-"}`,
-      `Empresa: ${empresa || "-"}`,
-      `Tipo de proyecto: ${tipoProyecto || "-"}`,
-      `Ciudad/Estado: ${ciudad || "-"}`,
-      `Mensaje: ${mensaje || "-"}`,
-    ].join("\n");
+    return `Hola, quiero cotizar un proyecto. Soy ${nombre || "un prospecto"}${empresa ? ` de ${empresa}` : ""}. ${
+      mensaje || ""
+    }`.trim();
+  };
+
+  const setFeedback = (type, message) => {
+    if (!feedback) return;
+    if (!message) {
+      feedback.classList.add("hidden");
+      feedback.textContent = "";
+      return;
+    }
+    feedback.classList.remove("hidden", "text-red-600", "text-accent-green");
+    feedback.classList.add(type === "error" ? "text-red-600" : "text-accent-green");
+    feedback.textContent = message;
+  };
+
+  const setSubmitting = (isSubmitting) => {
+    if (submitButton) {
+      submitButton.disabled = isSubmitting;
+      submitButton.classList.toggle("opacity-75", isSubmitting);
+      submitButton.classList.toggle("cursor-not-allowed", isSubmitting);
+    }
+    if (submitLabel) {
+      submitLabel.textContent = isSubmitting ? "Enviando..." : defaultSubmitText;
+    }
+  };
+
+  const getPayload = () => {
+    const tipoProyecto = getFieldValue("tipoProyecto");
+    const mensaje = getFieldValue("mensaje");
+    const mensajeCompleto = tipoProyecto ? `[Tipo de proyecto: ${tipoProyecto}]\n${mensaje}` : mensaje;
+
+    return {
+      nombre: getFieldValue("nombre"),
+      empresa: getFieldValue("empresa"),
+      telefono_whatsapp: getFieldValue("telefono_whatsapp"),
+      email: getFieldValue("email"),
+      ciudad_estado: getFieldValue("ciudad_estado"),
+      mensaje: mensajeCompleto,
+      website: getFieldValue("website"),
+    };
   };
 
   if (whatsappLink) {
-    whatsappLink.addEventListener("click", (event) => {
+    whatsappLink.addEventListener("click", () => {
       const message = buildWhatsappMessage();
       const url = `https://wa.me/525574570826?text=${encodeURIComponent(message)}`;
       whatsappLink.setAttribute("href", url);
-      window.open(url, "_blank", "noopener,noreferrer");
-      event.preventDefault();
     });
   }
 
   if (form) {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      setSubmitting(true);
+      setFeedback("success", "");
 
-      const nombre = getFieldValue("nombre");
-      const empresa = getFieldValue("empresa") || "Empresa";
-      const telefono = getFieldValue("telefono");
-      const email = getFieldValue("email");
-      const ciudad = getFieldValue("ciudad");
-      const tipoProyecto = getFieldValue("tipoProyecto");
-      const mensaje = getFieldValue("mensaje");
+      try {
+        const payload = getPayload();
+        const response = await fetch(hubspotLeadEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
-      const subject = `Solicitud de cotización — ${empresa}`;
-      const body = [
-        "Hola, me gustaría recibir una cotización.",
-        "",
-        `Nombre: ${nombre}`,
-        `Empresa: ${empresa}`,
-        `Teléfono/WhatsApp: ${telefono}`,
-        `Email: ${email}`,
-        `Ciudad/Estado: ${ciudad || "-"}`,
-        `Tipo de proyecto: ${tipoProyecto}`,
-        `Mensaje: ${mensaje}`,
-      ].join("\n");
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || !result?.ok) {
+          throw new Error(result?.error || "No se pudo enviar tu solicitud.");
+        }
 
-      const mailtoUrl = `mailto:ventas@segac.com.mx?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailtoUrl;
+        setFeedback("success", "Gracias. Recibimos tu solicitud y te contactaremos pronto.");
+        form.reset();
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "No se pudo enviar tu solicitud.";
+        setFeedback("error", message);
+      } finally {
+        setSubmitting(false);
+      }
     });
   }
 </script>
