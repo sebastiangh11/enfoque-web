@@ -1,7 +1,7 @@
 ---
 import Container from "./Container.astro";
 
-const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
+const whatsappBaseUrl = "https://wa.me/525574570826";
 ---
 
 <section id="contacto" class="relative overflow-hidden border-t border-border py-16 md:py-20">
@@ -12,63 +12,82 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
 
   <Container class="relative">
     <div class="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">COTIZACIÓN</p>
-        <h2 class="mt-3 text-3xl font-bold text-text-primary md:text-4xl">
-          Cotiza tu proyecto en menos de 24 horas.
-        </h2>
-        <p class="mt-4 text-text-secondary">
-          Ayudamos a empresas de todo México a producir publicidad impresa premium con entregas rápidas e instalación experta.
-        </p>
+      <div class="space-y-6">
+        <div class="space-y-3">
+          <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">CONVERSIÓN</p>
+          <h2 class="text-3xl font-bold text-text-primary md:text-4xl">
+            Producción de branding físico para empresas en México.
+          </h2>
+          <p class="text-text-secondary">
+            Atendemos corporativos, medianas empresas, PYMEs y retailers. Nos aventamos cualquier proyecto y entregamos
+            propuestas claras para arrancar rápido.
+          </p>
+        </div>
 
-        <ul class="mt-6 space-y-3 text-sm text-text-secondary">
+        <ul class="grid gap-3 text-sm text-text-secondary sm:grid-cols-2">
           <li class="flex items-center gap-3">
             <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364-6.364-2.121 2.121M8.757 15.243l-2.121 2.121m0-11.314 2.121 2.121m8.486 8.486 2.121 2.121" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
               </svg>
             </span>
-            <span>+30 años de experiencia</span>
+            <span>Atendemos corporativos y PYMEs</span>
           </li>
           <li class="flex items-center gap-3">
             <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m4-4H8" />
               </svg>
             </span>
-            <span>Producción e instalación profesional</span>
+            <span>Producción rápida</span>
           </li>
           <li class="flex items-center gap-3">
             <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
             </span>
-            <span>Atención rápida por WhatsApp</span>
+            <span>Calidad premium</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-soft text-brand-blue">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6" />
+              </svg>
+            </span>
+            <span>Nos adaptamos a cualquier proyecto</span>
           </li>
         </ul>
 
-        <div class="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-sm">
-          <p class="text-sm font-semibold text-text-primary">Respuesta rápida en horario laboral.</p>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-4 inline-flex w-full items-center justify-center rounded-full border-2 border-brand-blue px-6 py-3 text-sm font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 sm:w-auto"
-          >
-            Hablar por WhatsApp ahora
-          </a>
+        <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+          <p class="text-sm font-semibold text-text-primary">Contacto directo</p>
+          <div class="mt-4 flex flex-wrap gap-3 text-sm">
+            <a
+              href="mailto:ventas@segac.com.mx"
+              class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-semibold text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
+            >
+              ventas@segac.com.mx
+            </a>
+            <a
+              href={whatsappBaseUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-semibold text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
+            >
+              WhatsApp +52 55 7457 0826
+            </a>
+          </div>
         </div>
       </div>
 
       <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-8">
         <p class="text-sm font-semibold uppercase tracking-[0.2em] text-text-secondary">
-          Cuéntanos qué necesitas y te enviamos una propuesta personalizada.
+          Cuéntanos de tu proyecto y te preparamos una propuesta.
         </p>
 
-        <form class="mt-6 grid gap-4" aria-label="Formulario de cotización">
+        <form class="mt-6 grid gap-4" aria-label="Formulario de cotización" data-contact-form>
           <label class="grid gap-2 text-sm font-semibold text-text-primary">
-            Nombre completo
+            Nombre
             <input
               type="text"
               name="nombre"
@@ -83,18 +102,8 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
             <input
               type="text"
               name="empresa"
-              placeholder="Empresa (opcional)"
-              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
-            />
-          </label>
-
-          <label class="grid gap-2 text-sm font-semibold text-text-primary">
-            Email
-            <input
-              type="email"
-              name="email"
               required
-              placeholder="tu@empresa.com"
+              placeholder="Empresa"
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
             />
           </label>
@@ -111,18 +120,39 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
           </label>
 
           <label class="grid gap-2 text-sm font-semibold text-text-primary">
-            Servicio
+            Email
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="tu@empresa.com"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Ciudad / Estado (opcional)
+            <input
+              type="text"
+              name="ciudad"
+              placeholder="CDMX, Guadalajara, Monterrey"
+              class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-brand-orange"
+            />
+          </label>
+
+          <label class="grid gap-2 text-sm font-semibold text-text-primary">
+            Tipo de proyecto
             <select
-              name="servicio"
+              name="tipoProyecto"
               required
               class="w-full rounded-xl border border-border bg-surface-soft px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange"
             >
-              <option value="" disabled selected>Selecciona un servicio</option>
-              <option>Stands y exposiciones</option>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option>Branding para oficinas</option>
+              <option>Retail y punto de venta</option>
+              <option>Eventos y activaciones</option>
               <option>Señalización corporativa</option>
-              <option>Impresión gran formato</option>
-              <option>Regalos corporativos</option>
-              <option>Producción personalizada</option>
+              <option>Proyecto especial</option>
             </select>
           </label>
 
@@ -137,18 +167,95 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
             ></textarea>
           </label>
 
-          <button
-            type="submit"
-            class="mt-2 inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-orange/90 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
-          >
-            Enviar solicitud de cotización
-          </button>
+          <div class="mt-2 grid gap-3 sm:grid-cols-2">
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-orange/90 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            >
+              Enviar solicitud de cotización
+            </button>
+            <a
+              href={whatsappBaseUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-whatsapp-link
+              class="inline-flex w-full items-center justify-center rounded-full border-2 border-brand-blue px-6 py-4 text-sm font-semibold text-brand-blue transition hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            >
+              Cotizar por WhatsApp
+            </a>
+          </div>
 
-          <p class="hidden text-center text-sm font-semibold text-brand-blue" data-success-message>
-            Gracias. Te contactaremos muy pronto.
-          </p>
+          <p class="text-sm text-text-secondary">Respuesta en menos de 24 hrs hábiles.</p>
         </form>
       </div>
     </div>
   </Container>
 </section>
+
+<script>
+  const form = document.querySelector("[data-contact-form]");
+  const whatsappLink = document.querySelector("[data-whatsapp-link]");
+
+  const getFieldValue = (name) => {
+    if (!form) return "";
+    const field = form.querySelector(`[name="${name}"]`);
+    return field?.value?.trim() ?? "";
+  };
+
+  const buildWhatsappMessage = () => {
+    const nombre = getFieldValue("nombre");
+    const empresa = getFieldValue("empresa");
+    const tipoProyecto = getFieldValue("tipoProyecto");
+    const ciudad = getFieldValue("ciudad");
+    const mensaje = getFieldValue("mensaje");
+
+    return [
+      "Hola, me gustaría cotizar un proyecto.",
+      `Nombre: ${nombre || "-"}`,
+      `Empresa: ${empresa || "-"}`,
+      `Tipo de proyecto: ${tipoProyecto || "-"}`,
+      `Ciudad/Estado: ${ciudad || "-"}`,
+      `Mensaje: ${mensaje || "-"}`,
+    ].join("\n");
+  };
+
+  if (whatsappLink) {
+    whatsappLink.addEventListener("click", (event) => {
+      const message = buildWhatsappMessage();
+      const url = `https://wa.me/525574570826?text=${encodeURIComponent(message)}`;
+      whatsappLink.setAttribute("href", url);
+      window.open(url, "_blank", "noopener,noreferrer");
+      event.preventDefault();
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const nombre = getFieldValue("nombre");
+      const empresa = getFieldValue("empresa") || "Empresa";
+      const telefono = getFieldValue("telefono");
+      const email = getFieldValue("email");
+      const ciudad = getFieldValue("ciudad");
+      const tipoProyecto = getFieldValue("tipoProyecto");
+      const mensaje = getFieldValue("mensaje");
+
+      const subject = `Solicitud de cotización — ${empresa}`;
+      const body = [
+        "Hola, me gustaría recibir una cotización.",
+        "",
+        `Nombre: ${nombre}`,
+        `Empresa: ${empresa}`,
+        `Teléfono/WhatsApp: ${telefono}`,
+        `Email: ${email}`,
+        `Ciudad/Estado: ${ciudad || "-"}`,
+        `Tipo de proyecto: ${tipoProyecto}`,
+        `Mensaje: ${mensaje}`,
+      ].join("\n");
+
+      const mailtoUrl = `mailto:ventas@segac.com.mx?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+    });
+  }
+</script>
