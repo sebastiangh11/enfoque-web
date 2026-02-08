@@ -2,12 +2,23 @@
 import Container from "./Container.astro";
 import Button from "./Button.astro";
 
-const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
+const whatsappUrl = "https://wa.me/525574570826";
 
 const trustItems = [
   { label: "30+ años en impresión", icon: "calendar" },
   { label: "+500 proyectos entregados", icon: "projects" },
   { label: "Cobertura nacional (MX)", icon: "scale" },
+];
+
+const carouselImages = [
+  { src: "/images/hero/branding-1.jpeg", alt: "Proyecto de branding físico 1" },
+  { src: "/images/hero/branding-2.jpeg", alt: "Proyecto de branding físico 2" },
+  { src: "/images/hero/branding-3.jpeg", alt: "Proyecto de branding físico 3" },
+  { src: "/images/hero/branding-4.jpeg", alt: "Proyecto de branding físico 4" },
+  { src: "/images/hero/branding-5.jpeg", alt: "Proyecto de branding físico 5" },
+  { src: "/images/hero/branding-6.jpeg", alt: "Proyecto de branding físico 6" },
+  { src: "/images/hero/branding-7.jpeg", alt: "Proyecto de branding físico 7" },
+  { src: "/images/hero/branding-8.jpeg", alt: "Proyecto de branding físico 8" },
 ];
 ---
 
@@ -16,58 +27,60 @@ const trustItems = [
 
   <Container class="relative">
     <div class="lg:grid lg:grid-cols-12 lg:gap-12 xl:gap-16 lg:items-center">
-      <!-- Left: copy + CTAs + trust -->
-      <div class="text-center lg:text-left lg:col-span-7">
+      <div class="text-center lg:text-left lg:col-span-6">
         <h1
           id="hero-heading"
-          class="text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-6xl"
+          class="text-4xl font-bold tracking-tight leading-[1.06] text-text-primary md:text-5xl lg:text-6xl"
         >
-          Publicidad impresa para que tu marca se vea <span class="hero-headline-highlight">gigante.</span>
+          Publicidad impresa para que tu marca se vea
+          <span class="hero-marker">gigante</span>.
         </h1>
+
         <p class="mx-auto mt-6 max-w-xl text-lg text-text-secondary md:text-xl lg:mx-0">
-          Diseñamos, producimos e instalamos materiales publicitarios premium para empresas.
+          Diseñamos y producimos materiales publicitarios premium para empresas.
         </p>
 
-        <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+        <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:gap-5 lg:justify-start">
           <Button href="/#contacto" variant="primary" size="md">
             Cotizar proyecto
           </Button>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-11 items-center gap-2 rounded-xl bg-[#009640] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#007a34] hover:shadow-md hover:shadow-[#009640]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009640] focus-visible:ring-offset-2"
+            aria-label="WhatsApp"
+          >
+            <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-8.66 15L2 22l5.14-1.33A10 10 0 1 0 12 2Zm5.68 14.2c-.24.66-1.38 1.23-1.9 1.3-.49.06-1.11.09-1.79-.13-.41-.13-.93-.3-1.6-.58-2.81-1.2-4.64-4.1-4.78-4.3-.14-.2-1.14-1.52-1.14-2.9 0-1.38.72-2.05.98-2.33.26-.29.56-.36.75-.36.19 0 .38 0 .54.01.17.01.4-.06.63.49.24.57.82 1.96.89 2.1.07.14.12.31.02.5-.1.19-.15.31-.3.48-.14.17-.3.38-.43.5-.14.14-.28.29-.12.57.17.28.74 1.22 1.58 1.98 1.08.96 1.99 1.25 2.27 1.39.28.14.44.12.6-.07.17-.19.72-.84.91-1.12.19-.29.38-.24.63-.14.26.09 1.63.77 1.91.92.28.14.47.21.54.33.07.12.07.69-.17 1.35Z" />
+            </svg>
+            WhatsApp
+          </a>
+
           <Button href="/#portafolio" variant="secondary" size="md">
             Ver portafolio
           </Button>
         </div>
 
-        <p class="mt-4">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-text-muted hover:text-text-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 rounded"
-            aria-label="Hablar por WhatsApp"
-          >
-            Hablar por WhatsApp →
-          </a>
-        </p>
-
-        <!-- Trust indicators (pills) -->
         <div class="mt-12 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
           {trustItems.map((item) => (
             <span
-              class="inline-flex items-center gap-2 rounded-full border border-border bg-surface-soft px-4 py-2 text-sm text-text-secondary"
+              class="inline-flex items-center gap-2 rounded-full border border-border/60 bg-white/70 px-4 py-2 text-sm text-text-secondary backdrop-blur-sm"
               role="listitem"
             >
               {item.icon === "calendar" && (
-                <svg class="h-4 w-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="h-[1.05rem] w-[1.05rem] shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               )}
               {item.icon === "projects" && (
-                <svg class="h-4 w-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="h-[1.05rem] w-[1.05rem] shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 7V9a2 2 0 002 2m0 0V5a2 2 0 112 2v0m-6 2a2 2 0 002 2h0a2 2 0 002-2m0 0V5a2 2 0 112 2v0m0 0a2 2 0 104 0m0-4v0a2 2 0 104 0m0-4v0a2 2 0 104 0" />
                 </svg>
               )}
               {item.icon === "scale" && (
-                <svg class="h-4 w-4 shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg class="h-[1.05rem] w-[1.05rem] shrink-0 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-3 9" />
                 </svg>
               )}
@@ -77,23 +90,44 @@ const trustItems = [
         </div>
       </div>
 
-      <!-- Right: hero visual card -->
-      <div class="mt-14 lg:mt-0 lg:col-span-5 flex justify-center lg:justify-end">
-        <div class="hero-visual-card hero-visual-card-border w-full max-w-md">
-          <div class="rounded-2xl border border-border bg-surface p-5 shadow-sm md:p-6">
-            <!-- Abstract portfolio preview -->
-            <div class="flex gap-2 mb-3">
-              <div class="h-14 w-14 rounded-lg bg-surface-soft border border-border shrink-0" aria-hidden="true" />
-              <div class="h-14 flex-1 rounded-lg bg-surface-soft border border-border" aria-hidden="true" />
-              <div class="h-14 w-14 rounded-lg bg-surface-soft border border-border shrink-0" aria-hidden="true" />
-            </div>
+      <div class="mt-14 lg:mt-0 lg:col-span-6 flex justify-center lg:justify-end">
+        <div class="hero-visual-card hero-visual-card-border w-full max-w-[41rem]">
+          <div class="rounded-3xl border border-border/50 bg-surface/95 p-3 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-4 md:p-5">
             <div
-              class="aspect-[4/3] rounded-lg border border-border bg-gradient-to-br from-brand-blue/10 to-brand-orange/10 mb-4"
-              aria-hidden="true"
-            />
-            <p class="text-xs text-text-muted font-medium">
-              Stands • Señalización • Regalos corporativos
-            </p>
+              class="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-border/70 bg-surface-soft"
+              data-hero-carousel
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Galería de proyectos de branding físico"
+            >
+              {carouselImages.map((image, index) => (
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  width="1600"
+                  height="1000"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                  class={`hero-slide absolute inset-0 h-full w-full object-cover ${index === 0 ? "is-active" : ""}`}
+                  data-slide
+                  aria-hidden={index === 0 ? "false" : "true"}
+                />
+              ))}
+
+              <div class="hero-dots" role="tablist" aria-label="Navegación de imágenes">
+                {carouselImages.map((_, index) => (
+                  <button
+                    type="button"
+                    class={`hero-dot ${index === 0 ? "is-active" : ""}`}
+                    data-dot
+                    data-index={index}
+                    role="tab"
+                    aria-label={`Ir a imagen ${index + 1}`}
+                    aria-selected={index === 0 ? "true" : "false"}
+                  ></button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -101,17 +135,106 @@ const trustItems = [
   </Container>
 </section>
 
-<style>
-  .hero-headline-highlight {
-    background: linear-gradient(
-      to bottom,
-      transparent 58%,
-      color-mix(in srgb, var(--brand-orange) 35%, transparent) 58%
-    );
-    padding-inline: 0.08em;
-    border-radius: 2px;
-  }
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const carousel = document.querySelector("[data-hero-carousel]");
+    if (!carousel) return;
 
+    const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
+    const dots = Array.from(carousel.querySelectorAll("[data-dot]"));
+    if (!slides.length) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let activeIndex = 0;
+    let timer = null;
+    let startX = 0;
+    let isTouching = false;
+
+    if (reducedMotion) {
+      carousel.classList.add("reduced-motion");
+    }
+
+    const setActiveSlide = (index) => {
+      const nextIndex = (index + slides.length) % slides.length;
+      activeIndex = nextIndex;
+
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeIndex;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === activeIndex;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+    };
+
+    const stopAutoplay = () => {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const startAutoplay = () => {
+      if (reducedMotion || timer) return;
+      timer = window.setInterval(() => {
+        setActiveSlide(activeIndex + 1);
+      }, 3000);
+    };
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        const index = Number(dot.dataset.index || 0);
+        setActiveSlide(index);
+      });
+    });
+
+    carousel.addEventListener("mouseenter", stopAutoplay);
+    carousel.addEventListener("mouseleave", startAutoplay);
+    carousel.addEventListener("focusin", stopAutoplay);
+    carousel.addEventListener("focusout", (event) => {
+      if (!carousel.contains(event.relatedTarget)) {
+        startAutoplay();
+      }
+    });
+
+    carousel.addEventListener(
+      "touchstart",
+      (event) => {
+        startX = event.touches[0]?.clientX ?? 0;
+        isTouching = true;
+        stopAutoplay();
+      },
+      { passive: true }
+    );
+
+    carousel.addEventListener(
+      "touchend",
+      (event) => {
+        if (!isTouching) return;
+
+        const endX = event.changedTouches[0]?.clientX ?? startX;
+        const delta = endX - startX;
+
+        if (Math.abs(delta) > 40) {
+          setActiveSlide(delta < 0 ? activeIndex + 1 : activeIndex - 1);
+        }
+
+        isTouching = false;
+        startAutoplay();
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("pagehide", stopAutoplay);
+    startAutoplay();
+  });
+</script>
+
+<style>
   .hero-bg {
     background:
       linear-gradient(
@@ -138,21 +261,90 @@ const trustItems = [
 
   .hero-visual-card-border {
     padding: 1px;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--brand-blue) 20%, transparent),
-      color-mix(in srgb, var(--brand-orange) 15%, transparent)
+      145deg,
+      color-mix(in srgb, var(--brand-blue) 24%, transparent),
+      color-mix(in srgb, var(--brand-orange) 18%, transparent)
     );
   }
 
   .hero-visual-card-border > div {
-    border-radius: calc(1rem - 1px);
+    border-radius: calc(1.5rem - 1px);
+  }
+
+  .hero-marker {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+  }
+
+  .hero-marker::after {
+    content: "";
+    position: absolute;
+    left: -0.08em;
+    right: -0.08em;
+    bottom: 0.08em;
+    height: 0.26em;
+    border-radius: 0.3em;
+    background: color-mix(in srgb, var(--brand-orange) 52%, transparent);
+    z-index: -1;
   }
 
   .hero-visual-card {
     opacity: 0;
     animation: hero-float-in 1s ease-out forwards;
+  }
+
+  .hero-slide {
+    opacity: 0;
+    transition: opacity 700ms ease;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+  }
+
+  .hero-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 0.7rem;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, white 70%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border) 72%, white 28%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .hero-dot {
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    border: 0;
+    background: color-mix(in srgb, var(--text-muted) 35%, white 65%);
+    transition: transform 180ms ease, background-color 180ms ease;
+  }
+
+  .hero-dot.is-active {
+    background: color-mix(in srgb, var(--text-primary) 85%, black 15%);
+    width: 1.5rem;
+    border-radius: 999px;
+  }
+
+  .hero-dot:focus-visible {
+    outline: 2px solid var(--brand-orange);
+    outline-offset: 2px;
+  }
+
+  [data-hero-carousel].reduced-motion .hero-slide,
+  [data-hero-carousel].reduced-motion .hero-dot {
+    transition: none;
   }
 
   @keyframes hero-float-in {
