@@ -22,6 +22,7 @@
 
   /* Border */
   --border: #e3e5e8;
+  --nav-h: 88px;
 }
 
 /* Tailwind v4 @theme: semantic utility classes from CSS variables */
@@ -44,4 +45,30 @@
 
   /* Border */
   --color-border: var(--border);
+}
+
+.highlight-underline {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.highlight-underline::after {
+  content: "";
+  position: absolute;
+  left: -0.08em;
+  right: -0.08em;
+  bottom: 0.08em;
+  height: 0.26em;
+  border-radius: 0.3em;
+  background: color-mix(in srgb, var(--brand-orange) 48%, transparent);
+  z-index: -1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-h);
 }

@@ -1,0 +1,41 @@
+---
+import type { ServiceIconKey } from "../data/services";
+
+interface Props {
+  icon: ServiceIconKey;
+  class?: string;
+}
+
+const { icon, class: className = "h-6 w-6" } = Astro.props;
+---
+
+{icon === "branding" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 7h16M7 4v6m10-6v6M6 12h12v7H6z" />
+  </svg>
+)}
+{icon === "expo" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 19h18M5 19V9l7-4 7 4v10M9 13h6" />
+  </svg>
+)}
+{icon === "papeleria" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6" />
+  </svg>
+)}
+{icon === "grabado" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 3v4m0 10v4M4 12h4m8 0h4M7 7l10 10M17 7 7 17" />
+  </svg>
+)}
+{icon === "textil" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M8 4l2 3h4l2-3 4 3-2 4v9H6v-9L4 7z" />
+  </svg>
+)}
+{icon === "diseno" && (
+  <svg class={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="m4 16 8-8 4 4-8 8H4zM14 6l2-2 4 4-2 2" />
+  </svg>
+)}

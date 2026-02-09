@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import Container from "../../components/Container.astro";
+import Button from "../../components/Button.astro";
+import ServiceIcon from "../../components/ServiceIcon.astro";
+import { services, servicesBySlug } from "../../data/services";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+
+const fallbackService = servicesBySlug.get(Astro.params.slug ?? "") ?? services[0];
+const currentService = service ?? fallbackService;
+
+const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
+  `Hola, me interesa cotizar ${currentService.name}. ¿Me compartes opciones y tiempos?`
+)}`;
+
+const otherServices = services.filter((item) => item.slug !== currentService.slug).slice(0, 3);
+---
+
+<BaseLayout title={currentService.seoTitle} description={currentService.seoDescription}>
+  <Nav />
+
+  <main>
+    <section class="relative border-t border-border py-14 md:py-20" aria-labelledby="servicio-heading">
+      <div
+        class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_12%_10%,color-mix(in_srgb,var(--brand-blue)_10%,transparent),transparent_44%),radial-gradient(circle_at_85%_16%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_42%),radial-gradient(circle_at_65%_84%,color-mix(in_srgb,var(--accent-green)_8%,transparent),transparent_48%)]"
+        aria-hidden="true"
+      ></div>
+
+      <Container class="relative">
+        <a
+          href="/servicios"
+          class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+        >
+          <span class="mr-1" aria-hidden="true">←</span>
+          Volver a servicios
+        </a>
+
+        <header class="mt-6 max-w-3xl">
+          <div class="inline-flex items-center rounded-full border border-border bg-surface-soft px-4 py-2 text-sm font-medium text-text-secondary shadow-sm">
+            En construcción: estamos documentando proyectos y casos reales. Si necesitas cotización, contáctanos.
+          </div>
+
+          <div class="mt-6 flex items-start gap-4">
+            <span
+              class:list={[
+                "inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border bg-surface-soft text-brand-blue",
+                currentService.accent === "orange" ? "border-brand-orange/20" : "border-accent-green/30",
+              ]}
+              aria-hidden="true"
+            >
+              <ServiceIcon icon={currentService.icon} />
+            </span>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.28em] text-brand-blue">Servicio</p>
+              <h1 id="servicio-heading" class="mt-2 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
+                {currentService.name}
+              </h1>
+              <p class="mt-4 text-base leading-relaxed text-text-secondary md:text-lg">
+                {currentService.shortDescription} Resolvemos ejecución física y visual con enfoque premium para empresas en México.
+              </p>
+            </div>
+          </div>
+        </header>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-2">
+          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="resumen-heading">
+            <h2 id="resumen-heading" class="text-xl font-semibold text-text-primary">Resumen</h2>
+            <p class="mt-3 text-sm leading-relaxed text-text-secondary">
+              Diseñamos y producimos con claridad de proceso, foco en calidad y tiempos de respuesta ágiles para equipos de marketing, compras y dirección.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-text-secondary">
+              {currentService.highlights.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-blue" aria-hidden="true"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="incluye-heading">
+            <h2 id="incluye-heading" class="text-xl font-semibold text-text-primary">Qué incluye</h2>
+            <ul class="mt-4 space-y-2 text-sm text-text-secondary">
+              {currentService.includes.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-orange" aria-hidden="true"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="ideal-heading">
+            <h2 id="ideal-heading" class="text-xl font-semibold text-text-primary">Ideal para</h2>
+            <ul class="mt-4 space-y-2 text-sm text-text-secondary">
+              {currentService.useCases.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-green" aria-hidden="true"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="cotizar-heading">
+            <h2 id="cotizar-heading" class="text-xl font-semibold text-text-primary">Qué necesitamos para cotizar</h2>
+            <ul class="mt-4 space-y-2 text-sm text-text-secondary">
+              {currentService.whatWeNeed.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-blue" aria-hidden="true"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+
+        <section class="mt-6 rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="proceso-heading">
+          <h2 id="proceso-heading" class="text-xl font-semibold text-text-primary">Proceso</h2>
+          <ol class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
+            {currentService.process.map((step, index) => (
+              <li class="rounded-xl border border-border bg-surface-soft p-4">
+                <p class="text-xs font-semibold uppercase tracking-[0.14em] text-brand-blue">Paso {index + 1}</p>
+                <p class="mt-2 text-sm leading-relaxed text-text-secondary">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="mt-6 rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="cta-servicio-heading">
+          <h2 id="cta-servicio-heading" class="text-xl font-semibold text-text-primary">Siguiente paso</h2>
+          <p class="mt-3 text-sm leading-relaxed text-text-secondary">
+            Compártenos tu alcance y tiempos. Te ayudamos a estructurar una propuesta clara y viable para avanzar rápido.
+          </p>
+
+          <div class="mt-6 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
+            <Button href="/#contacto" variant="primary" size="md" class="w-full sm:w-auto">
+              {currentService.ctaPrimaryLabel}
+            </Button>
+            <Button
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="ghost"
+              size="md"
+              class="w-full border-2 !border-accent-green !bg-accent-green !text-white hover:!border-accent-green hover:!bg-accent-green/90 hover:!text-white sm:w-auto"
+            >
+              <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+              </svg>
+              WhatsApp
+            </Button>
+          </div>
+
+          <p class="mt-3 text-sm text-text-secondary">Respuesta en menos de 24 hrs hábiles.</p>
+
+          <div class="mt-4">
+            <a
+              href="/#portafolio"
+              class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+            >
+              Ver portafolio completo
+              <span class="ml-1" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="mt-10" aria-labelledby="otros-servicios-heading">
+          <h2 id="otros-servicios-heading" class="text-2xl font-semibold text-text-primary">Otros servicios</h2>
+          <div class="mt-5 grid gap-4 md:grid-cols-3">
+            {otherServices.map((item) => (
+              <a
+                href={`/servicios/${item.slug}`}
+                class="group rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-blue/35 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              >
+                <div class="flex items-center gap-3">
+                  <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-soft text-brand-blue" aria-hidden="true">
+                    <ServiceIcon icon={item.icon} class="h-5 w-5" />
+                  </span>
+                  <h3 class="text-sm font-semibold leading-tight text-text-primary">{item.name}</h3>
+                </div>
+                <p class="mt-3 text-sm text-text-secondary">{item.shortDescription}</p>
+                <span class="mt-4 inline-flex items-center text-sm font-semibold text-text-secondary transition-colors group-hover:text-brand-blue">
+                  Ver detalle
+                  <span class="ml-1" aria-hidden="true">→</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      </Container>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

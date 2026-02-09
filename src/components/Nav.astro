@@ -1,82 +1,140 @@
 ---
 import Container from "./Container.astro";
-import Button from "./Button.astro";
-import logoMark from "../assets/enfoque-ppp.svg";
 
 const links = [
-  { href: "/#servicios", label: "Servicios" },
-  { href: "/#nosotros", label: "Nosotros" },
-  { href: "/#proceso", label: "Proceso" },
-  { href: "/#portafolio", label: "Portafolio" },
-  { href: "/#contacto", label: "Contacto" },
+  { href: "/#portafolio", label: "Portafolio", section: "portafolio" },
+  { href: "/#proceso", label: "Proceso", section: "proceso" },
+  { href: "/#nosotros", label: "Nosotros", section: "nosotros" },
+  { href: "/#contacto", label: "Contacto", section: "contacto" },
 ];
 
-const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXXXXXXXXX";
+const servicesLinks = [
+  { label: "Branding físico para empresas", href: "/servicios/branding-fisico" },
+  { label: "Expo / stands corporativos", href: "/servicios/expo-stands" },
+  { label: "Papelería corporativa premium", href: "/servicios/papeleria-corporativa" },
+  { label: "Grabado láser y personalización", href: "/servicios/grabado-laser" },
+  { label: "Impresión textil profesional", href: "/servicios/impresion-textil" },
+  { label: "Diseño gráfico aplicado a producción", href: "/servicios/diseno-grafico" },
+];
+
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/525574570826";
+const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 ---
 
+<div id="nav-shadow-sentinel" class="pointer-events-none h-px w-full" aria-hidden="true"></div>
+<!-- Sticky headers break if an ancestor uses overflow/transform/filter; keep those styles on page content wrappers, not around this header. -->
 <header
   id="nav-header"
-  class="nav-header sticky top-0 z-50 border-b border-border bg-surface/80 backdrop-blur-md transition-all duration-200"
+  class="sticky top-0 z-50 border-b border-border/60 bg-white/80 backdrop-blur-md transition-all duration-200"
 >
   <nav class="relative py-3" aria-label="Navegación principal">
-    <Container as="div" class="flex flex-wrap items-center justify-between gap-4">
-      <!-- Brand lockup -->
+    <Container as="div" class="relative z-[60] flex items-center justify-between gap-4">
       <a
         href="/"
         aria-label="Ir a inicio"
-        class="flex items-center gap-3 rounded focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2 transition-colors"
+        class="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
       >
-        <span class="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-white p-1 sm:h-9 sm:w-9">
-          <img src={logoMark} alt="Enfoque en Medios Publicitarios" class="h-full w-full object-contain" />
-        </span>
-        <span class="flex flex-col leading-tight">
-          <span class="block text-sm font-semibold tracking-tight text-text-primary transition-colors hover:text-brand-blue sm:text-base">
-            Enfoque en Medios Publicitarios
-          </span>
-          <span class="hidden text-xs text-text-muted sm:block">
-            Publicidad impresa • Producción • Instalación
-          </span>
-        </span>
+        <img
+          src="/images/nav/enfoque-ppp.png"
+          alt="Enfoque en Medios Publicitarios"
+          class="h-10 w-auto object-contain sm:h-11 md:h-12"
+          loading="eager"
+          decoding="async"
+        />
       </a>
 
-      <!-- Desktop: links + CTAs -->
       <div class="hidden items-center gap-6 lg:flex">
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5">
+          <div class="relative" data-services-item>
+            <button
+              type="button"
+              id="nav-services-button"
+              class="nav-link relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-text-secondary transition-all duration-200 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+              data-nav-link
+              data-nav-section="servicios"
+              data-active={isServicesPath ? "true" : "false"}
+              aria-expanded="false"
+              aria-controls="nav-services-menu"
+              aria-haspopup="true"
+            >
+              <span class="relative z-10">Servicios</span>
+              <svg
+                id="nav-services-chevron"
+                class="relative z-10 h-4 w-4 transition-transform duration-200"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+
+            <div
+              id="nav-services-menu"
+              class="services-menu invisible absolute left-0 top-full z-50 mt-2 w-[21rem] rounded-xl border border-border bg-surface p-2 opacity-0 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out"
+              role="menu"
+              aria-label="Submenú de servicios"
+              aria-hidden="true"
+            >
+              <div class="space-y-1">
+                {servicesLinks.map((service) => (
+                  <a
+                    href={service.href}
+                    role="menuitem"
+                    class="block rounded-lg px-4 py-2 text-sm font-medium text-text-secondary transition-all duration-150 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                    data-services-link
+                  >
+                    {service.label}
+                  </a>
+                ))}
+              </div>
+
+              <div class="mt-2 border-t border-border pt-2">
+                <a
+                  href="/servicios"
+                  role="menuitem"
+                  class="block rounded-lg px-4 py-2 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  data-services-link
+                >
+                  Ver todos los servicios →
+                </a>
+              </div>
+            </div>
+          </div>
+
           {links.map((l) => (
             <a
               href={l.href}
               data-nav-link
-              class="nav-link relative rounded text-sm font-semibold text-text-muted transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              data-nav-section={l.section}
+              class="nav-link relative rounded-full px-3 py-2 text-sm font-semibold text-text-secondary transition-all duration-200 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
             >
               <span class="relative z-10">{l.label}</span>
             </a>
           ))}
         </div>
-        <div class="ml-2 flex items-center gap-2">
-          <Button href="/#contacto" variant="primary" size="sm">
-            Cotizar proyecto
-          </Button>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center rounded-full border-2 border-brand-blue px-4 py-2 text-sm font-semibold text-brand-blue transition-all hover:bg-brand-blue/10 hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
-            aria-label="Hablar por WhatsApp"
-          >
-            WhatsApp
-          </a>
-        </div>
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 items-center justify-center rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+          aria-label="Cotizar por WhatsApp"
+        >
+          <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+          </svg>
+          Cotizar por WhatsApp
+        </a>
       </div>
 
-      <!-- Mobile: hamburger -->
-      <div class="flex items-center gap-2 lg:hidden">
-        <Button href="/#contacto" variant="primary" size="sm">
-          Cotizar
-        </Button>
+      <div class="flex items-center lg:hidden">
         <button
           id="nav-menu-button"
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface-soft focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+          class="flex h-11 w-11 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           aria-expanded="false"
           aria-controls="nav-menu-panel"
           aria-label="Abrir menú"
@@ -91,40 +149,86 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       </div>
     </Container>
 
-    <!-- Mobile menu panel -->
     <div
       id="nav-menu-panel"
-      class="nav-menu-panel absolute left-0 right-0 top-full z-40 border-t border-border bg-surface lg:hidden transition-[opacity,transform] duration-200 ease-out opacity-0 -translate-y-3 pointer-events-none"
+      class="nav-menu-panel fixed inset-0 z-50 flex flex-col gap-4 bg-white/95 p-6 pt-24 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-200 lg:hidden"
       role="dialog"
       aria-label="Menú de navegación"
       aria-hidden="true"
     >
-      <div class="mx-auto max-w-6xl px-4 py-4 sm:px-6">
+      <div class="mx-auto w-full max-w-xl">
         <ul class="flex flex-col gap-1" role="list">
+          <li>
+            <button
+              type="button"
+              class="nav-mobile-link flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+              id="mobile-services-toggle"
+              data-nav-link
+              data-nav-section="servicios"
+              data-active={isServicesPath ? "true" : "false"}
+              aria-expanded="false"
+              aria-controls="mobile-services-list"
+            >
+              <span class="font-semibold">Servicios</span>
+              <svg
+                class="h-4 w-4 transition-transform duration-200"
+                data-mobile-services-chevron
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+
+            <div id="mobile-services-list" class="hidden space-y-1 px-2 pb-2" aria-hidden="true">
+              {servicesLinks.map((service) => (
+                <a
+                  href={service.href}
+                  class="block rounded-lg px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  data-mobile-service-link
+                >
+                  {service.label}
+                </a>
+              ))}
+              <a
+                href="/servicios"
+                class="mt-1 block rounded-lg border-t border-border px-4 py-2 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                data-mobile-service-link
+              >
+                Ver todos los servicios →
+              </a>
+            </div>
+          </li>
+
           {links.map((l) => (
             <li>
               <a
                 href={l.href}
                 data-nav-link
-                class="nav-mobile-link block rounded-xl px-4 py-3 text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-inset"
+                data-nav-section={l.section}
+                class="nav-mobile-link block rounded-xl px-4 py-3 text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
               >
                 {l.label}
               </a>
             </li>
           ))}
         </ul>
-        <div class="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-          <Button href="/#contacto" variant="primary" size="md" class="w-full">
-            Cotizar proyecto
-          </Button>
+
+        <div class="mt-5 border-t border-border pt-5">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex w-full items-center justify-center rounded-xl border-2 border-brand-blue px-6 py-3 text-base font-semibold text-brand-blue transition-colors hover:bg-brand-blue/10 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
-            aria-label="Hablar por WhatsApp"
+            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-green-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+            aria-label="Cotizar por WhatsApp"
           >
-            WhatsApp
+            <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+              <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
+            </svg>
+            Cotizar por WhatsApp
           </a>
         </div>
       </div>
@@ -133,31 +237,26 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
 </header>
 
 <style>
-  .nav-header[data-scrolled="true"] {
-    background-color: color-mix(in srgb, var(--surface) 96%, transparent);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
-  }
-
-  .nav-link {
-    padding: 0.25rem 0.5rem;
+  #nav-header[data-scrolled="true"] {
+    box-shadow: 0 10px 30px -24px rgb(0 0 0 / 0.25);
   }
 
   .nav-link::after {
     content: "";
     position: absolute;
-    left: 0;
-    bottom: -0.35rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.38rem;
     height: 2px;
-    width: 100%;
     transform: scaleX(0);
     transform-origin: left;
     background: linear-gradient(90deg, var(--brand-orange), color-mix(in srgb, var(--brand-orange) 40%, var(--brand-blue)));
-    transition: transform 220ms ease;
+    transition: transform 200ms ease;
   }
 
-  .nav-link[data-active="true"],
-  .nav-link:hover {
+  .nav-link[data-active="true"] {
     color: var(--text-primary);
+    background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
   }
 
   .nav-link[data-active="true"]::after,
@@ -165,14 +264,24 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
     transform: scaleX(1);
   }
 
-  .nav-menu-panel.nav-menu-open {
+  .services-menu[data-open="true"] {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .services-menu {
+    transform: translateY(0.5rem);
+  }
+
+  .nav-menu-panel.nav-menu-open {
+    opacity: 1;
     pointer-events: auto;
   }
 
-  .nav-menu-panel.nav-menu-open[aria-hidden="false"] {
-    visibility: visible;
+  .nav-mobile-link[data-active="true"] {
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
   }
 </style>
 
@@ -184,16 +293,44 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
     const iconOpen = document.getElementById("nav-icon-open");
     const iconClose = document.getElementById("nav-icon-close");
     const navLinks = document.querySelectorAll("[data-nav-link]");
+    const navShadowSentinel = document.getElementById("nav-shadow-sentinel");
+
+    const servicesItem = document.querySelector("[data-services-item]");
+    const servicesButton = document.getElementById("nav-services-button");
+    const servicesMenu = document.getElementById("nav-services-menu");
+    const servicesChevron = document.getElementById("nav-services-chevron");
+
+    const mobileServicesToggle = document.getElementById("mobile-services-toggle");
+    const mobileServicesList = document.getElementById("mobile-services-list");
+    const mobileServicesChevron = document.querySelector("[data-mobile-services-chevron]");
 
     if (!header || !menuButton || !menuPanel || !iconOpen || !iconClose) return;
 
-    const sectionIds = ["servicios", "nosotros", "proceso", "portafolio", "contacto"];
+    const isServicesPage = window.location.pathname.startsWith("/servicios");
+    const isHomePage = window.location.pathname === "/";
+    const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
+    const sectionRatioMap = new Map();
+
+    function syncNavHeightVar() {
+      const navHeight = Math.ceil(header.getBoundingClientRect().height || 0);
+      if (navHeight > 0) {
+        document.documentElement.style.setProperty("--nav-h", `${navHeight}px`);
+      }
+    }
 
     function setActiveBySectionId(id) {
-      const targetHref = id ? `/#${id}` : null;
+      const normalizedId = id && sectionIds.includes(id) ? id : null;
       navLinks.forEach((link) => {
-        const href = link.getAttribute("href");
-        link.setAttribute("data-active", href && targetHref && href === targetHref ? "true" : "false");
+        const section = link.getAttribute("data-nav-section");
+
+        if (section === "servicios") {
+          const active = isServicesPage || normalizedId === "servicios";
+          link.setAttribute("data-active", active ? "true" : "false");
+          return;
+        }
+
+        const active = !isServicesPage && normalizedId === section;
+        link.setAttribute("data-active", active ? "true" : "false");
       });
     }
 
@@ -202,45 +339,108 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       setActiveBySectionId(hash || null);
     }
 
-    // --- Scrolled state ---
-    let scrollTicking = false;
-    function updateScrolled() {
-      const isScrolled = window.scrollY > 10;
-      header.setAttribute("data-scrolled", isScrolled ? "true" : "false");
+    function setDesktopServicesOpen(isOpen) {
+      if (!servicesMenu || !servicesButton) return;
+      servicesMenu.setAttribute("data-open", isOpen ? "true" : "false");
+      servicesMenu.setAttribute("aria-hidden", isOpen ? "false" : "true");
+      servicesButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      servicesChevron?.classList.toggle("rotate-180", isOpen);
     }
-    function onScroll() {
-      if (!scrollTicking) {
-        requestAnimationFrame(() => {
-          updateScrolled();
-          scrollTicking = false;
-        });
-        scrollTicking = true;
-      }
+
+    function setMobileServicesOpen(isOpen) {
+      if (!mobileServicesToggle || !mobileServicesList) return;
+      mobileServicesToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      mobileServicesList.classList.toggle("hidden", !isOpen);
+      mobileServicesList.setAttribute("aria-hidden", isOpen ? "false" : "true");
+      mobileServicesChevron?.classList.toggle("rotate-180", isOpen);
     }
-    updateScrolled();
-    window.addEventListener("scroll", onScroll, { passive: true });
 
-    // --- Active links (hash + scroll-spy) ---
-    setActiveByHash();
-    window.addEventListener("hashchange", setActiveByHash);
+    function updateActiveFromVisibleSections() {
+      if (!sectionRatioMap.size) return;
+      const best = [...sectionRatioMap.entries()].sort((a, b) => b[1] - a[1])[0];
+      if (!best) return;
+      setActiveBySectionId(best[0]);
+    }
 
-    try {
+    function setupSectionObserver() {
+      if (isServicesPage || !("IntersectionObserver" in window)) return;
+
       const observer = new IntersectionObserver(
         (entries) => {
-          const visible = entries.filter((entry) => entry.isIntersecting && entry.target.id);
-          if (visible.length === 0) return;
-          const best = visible.reduce((a, b) => (a.intersectionRatio >= b.intersectionRatio ? a : b));
-          setActiveBySectionId(best.target.id);
-        },
-        { root: null, rootMargin: "0px 0px -45% 0px", threshold: [0.2, 0.4, 0.6, 0.8] }
-      );
-      sectionIds.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) observer.observe(el);
-      });
-    } catch (_) {}
+          entries.forEach((entry) => {
+            const id = entry.target.id;
+            if (!id) return;
 
-    // --- Mobile menu ---
+            if (entry.isIntersecting) {
+              sectionRatioMap.set(id, entry.intersectionRatio);
+            } else {
+              sectionRatioMap.delete(id);
+            }
+          });
+
+          updateActiveFromVisibleSections();
+        },
+        {
+          root: null,
+          rootMargin: "-25% 0px -65% 0px",
+          threshold: [0, 0.1, 0.25],
+        }
+      );
+
+      sectionIds.forEach((id) => {
+        const section = document.getElementById(id);
+        if (section) observer.observe(section);
+      });
+    }
+
+    function setupScrolledObserver() {
+      if (!navShadowSentinel || !("IntersectionObserver" in window)) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          header.setAttribute("data-scrolled", entry.isIntersecting ? "false" : "true");
+        },
+        { root: null, threshold: 0, rootMargin: "-10px 0px 0px 0px" }
+      );
+      observer.observe(navShadowSentinel);
+    }
+
+    syncNavHeightVar();
+    if ("ResizeObserver" in window) {
+      const navResizeObserver = new ResizeObserver(() => syncNavHeightVar());
+      navResizeObserver.observe(header);
+    } else {
+      window.addEventListener("resize", syncNavHeightVar, { passive: true });
+    }
+
+    setActiveByHash();
+    setupSectionObserver();
+    setupScrolledObserver();
+    window.addEventListener("hashchange", setActiveByHash);
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const href = link.getAttribute("href");
+        if (!href) return;
+
+        const menuOpen = menuButton.getAttribute("aria-expanded") === "true";
+        if (menuOpen && link.classList.contains("nav-mobile-link")) {
+          closeMenu();
+        }
+
+        if (!isHomePage || !href.startsWith("/#")) return;
+
+        const targetId = href.slice(2);
+        const target = targetId ? document.getElementById(targetId) : null;
+        if (!target) return;
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        setActiveBySectionId(targetId);
+        history.replaceState(null, "", `/#${targetId}`);
+      });
+    });
+
     function openMenu() {
       menuPanel.classList.add("nav-menu-open");
       menuPanel.setAttribute("aria-hidden", "false");
@@ -257,28 +457,82 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/521XXX
       menuButton.setAttribute("aria-label", "Abrir menú");
       iconOpen.classList.remove("hidden");
       iconClose.classList.add("hidden");
+      setMobileServicesOpen(false);
     }
 
     menuButton.addEventListener("click", () => {
       const expanded = menuButton.getAttribute("aria-expanded") === "true";
-      if (expanded) closeMenu();
-      else openMenu();
+      if (expanded) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
+
+    if (servicesItem && servicesButton && servicesMenu) {
+      servicesItem.addEventListener("mouseenter", () => {
+        if (window.matchMedia("(min-width: 1024px)").matches) setDesktopServicesOpen(true);
+      });
+
+      servicesItem.addEventListener("mouseleave", () => {
+        if (window.matchMedia("(min-width: 1024px)").matches) setDesktopServicesOpen(false);
+      });
+
+      servicesItem.addEventListener("focusin", () => setDesktopServicesOpen(true));
+      servicesItem.addEventListener("focusout", () => {
+        window.setTimeout(() => {
+          const active = document.activeElement;
+          if (active && !servicesItem.contains(active)) {
+            setDesktopServicesOpen(false);
+          }
+        }, 0);
+      });
+
+      servicesButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        const isOpen = servicesButton.getAttribute("aria-expanded") === "true";
+        setDesktopServicesOpen(!isOpen);
+      });
+
+      servicesMenu.querySelectorAll("[data-services-link]").forEach((link) => {
+        link.addEventListener("click", () => setDesktopServicesOpen(false));
+      });
+    }
+
+    if (mobileServicesToggle) {
+      mobileServicesToggle.addEventListener("click", () => {
+        const expanded = mobileServicesToggle.getAttribute("aria-expanded") === "true";
+        setMobileServicesOpen(!expanded);
+      });
+    }
+
+    if (mobileServicesList) {
+      mobileServicesList.querySelectorAll("[data-mobile-service-link]").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+    }
 
     menuPanel.querySelectorAll(".nav-mobile-link").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") {
+        closeMenu();
+        setDesktopServicesOpen(false);
+      }
     });
 
     document.addEventListener("click", (event) => {
-      const expanded = menuButton.getAttribute("aria-expanded") === "true";
-      if (!expanded) return;
       const target = event.target;
-      if (target && !menuPanel.contains(target) && target !== menuButton && !menuButton.contains(target)) {
+
+      const expanded = menuButton.getAttribute("aria-expanded") === "true";
+      if (expanded && target && !menuPanel.contains(target) && target !== menuButton && !menuButton.contains(target)) {
         closeMenu();
+      }
+
+      if (servicesItem && target && !servicesItem.contains(target)) {
+        setDesktopServicesOpen(false);
       }
     });
   }
