@@ -95,7 +95,10 @@ const safeMaxItems = Math.max(1, maxItems);
 const initialCategory = categories[0];
 const initialImages = initialCategory.images.slice(0, safeMaxItems);
 const gridSlots = Array.from({ length: safeMaxItems }, (_, index) => index);
-const totalCategoriesLabel = String(categories.length).padStart(2, "0");
+const initialVisibleCount = initialImages.length;
+const initialCurrentLabel = String(initialVisibleCount > 0 ? 1 : 0).padStart(2, "0");
+const initialTotalLabel = String(initialVisibleCount).padStart(2, "0");
+const portfolioWhatsappUrl = "https://wa.me/525574570826?text=Hola%20Enfoque%2C%20quiero%20cotizar%20un%20proyecto.";
 ---
 
 <div class="relative" data-portfolio-gallery-root>
@@ -103,15 +106,15 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
 
   <div class="mb-3 flex items-center justify-between md:mb-4 md:hidden">
     <p class="text-xs tabular-nums text-text-muted">
-      <span data-category-current class="font-semibold text-text-primary">01</span>
-      <span class="ml-1">/ {totalCategoriesLabel}</span>
+      <span data-mobile-current class="font-semibold text-text-primary">{initialCurrentLabel}</span>
+      <span class="ml-1">/ <span data-mobile-total>{initialTotalLabel}</span></span>
     </p>
-    <p class="inline-flex items-center gap-1 text-[11px] font-medium text-text-muted" aria-hidden="true">
+    <p class="inline-flex items-center gap-1 text-[11px] font-medium text-text-muted" data-mobile-hint aria-hidden="true" hidden={initialVisibleCount <= 1}>
       <span>Desliza</span>
       <span aria-hidden="true">→</span>
     </p>
-    <span class="sr-only" data-category-label aria-live="polite" aria-atomic="true">
-      Categoría activa: {initialCategory.label}
+    <span class="sr-only" data-mobile-live aria-live="polite" aria-atomic="true">
+      Proyecto {initialCurrentLabel} de {initialTotalLabel} en {initialCategory.label}
     </span>
   </div>
 
@@ -133,7 +136,7 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
             data-category-index={index}
             data-active={index === 0 ? "true" : "false"}
             aria-pressed={index === 0 ? "true" : "false"}
-            aria-controls="portfolio-grid"
+            aria-controls="portfolio-mobile-track portfolio-grid"
           >
             <span>{category.label}</span>
           </button>
@@ -142,7 +145,78 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
     </div>
   </div>
 
-  <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3" id="portfolio-grid" role="list" data-portfolio-grid>
+  <div class="sm:hidden">
+    <div
+      class="rounded-2xl border border-border bg-surface p-4 text-left shadow-sm"
+      data-mobile-empty-state
+      hidden={initialVisibleCount !== 0}
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <p class="text-sm font-semibold text-text-primary">En construcción</p>
+      <p class="mt-1.5 text-sm leading-relaxed text-text-secondary">
+        Estamos cargando proyectos de esta categoría. Te compartimos referencias por WhatsApp.
+      </p>
+      <a
+        href={portfolioWhatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ui-interactive mt-3.5 inline-flex min-h-11 items-center justify-center rounded-xl border-2 border-accent-green bg-accent-green px-4 py-2.5 text-sm font-semibold text-white hover:border-[#00853a] hover:bg-[#00853a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+        aria-label="Solicitar referencias de portafolio por WhatsApp"
+      >
+        Solicitar referencias
+      </a>
+    </div>
+
+    <div class="portfolio-mobile-shell" data-mobile-shell hidden={initialVisibleCount === 0}>
+      <ul
+        id="portfolio-mobile-track"
+        class="portfolio-mobile-track"
+        role="list"
+        data-portfolio-mobile-track
+        data-mobile-region
+        aria-label={`Carrusel de ${initialCategory.label}`}
+      >
+        {gridSlots.map((slotIndex) => {
+          const imageSrc = initialImages[slotIndex];
+          const isVisible = Boolean(imageSrc);
+          return (
+            <li
+              class="portfolio-mobile-item w-[88vw] max-w-[27rem] shrink-0 snap-start"
+              data-mobile-card
+              hidden={!isVisible}
+              aria-hidden={!isVisible ? "true" : "false"}
+            >
+              <button
+                type="button"
+                class="ui-interactive group block w-full overflow-hidden rounded-2xl border border-border bg-surface text-left shadow-sm hover:border-accent-green/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+                data-mobile-trigger
+                data-image-index={slotIndex}
+              >
+                <div class="skeleton-bg relative aspect-[16/10] w-full overflow-hidden bg-surface-soft">
+                  <img
+                    src={imageSrc ?? ""}
+                    alt={`${initialCategory.seoLabel} en México - proyecto ${slotIndex + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    width="1600"
+                    height="1000"
+                    class="h-full w-full object-cover"
+                    data-mobile-image
+                  />
+
+                  <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" aria-hidden="true"></div>
+                </div>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
+
+  <ul class="hidden grid-cols-1 gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-3" id="portfolio-grid" role="list" data-portfolio-grid>
     {gridSlots.map((slotIndex) => {
       const imageSrc = initialImages[slotIndex];
       const isVisible = Boolean(imageSrc);
@@ -252,10 +326,17 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
   roots.forEach((root) => {
     const buttons = Array.from(root.querySelectorAll("[data-category-button]"));
     const cards = Array.from(root.querySelectorAll("[data-grid-card]"));
+    const mobileCards = Array.from(root.querySelectorAll("[data-mobile-card]"));
     const pillsWrapper = root.querySelector("[data-pills-wrapper]");
     const sentinel = root.querySelector("[data-sticky-sentinel]");
-    const categoryCurrent = root.querySelector("[data-category-current]");
-    const categoryLabel = root.querySelector("[data-category-label]");
+    const mobileTrack = root.querySelector("[data-portfolio-mobile-track]");
+    const mobileCurrent = root.querySelector("[data-mobile-current]");
+    const mobileTotal = root.querySelector("[data-mobile-total]");
+    const mobileHint = root.querySelector("[data-mobile-hint]");
+    const mobileLive = root.querySelector("[data-mobile-live]");
+    const mobileRegion = root.querySelector("[data-mobile-region]");
+    const mobileEmptyState = root.querySelector("[data-mobile-empty-state]");
+    const mobileShell = root.querySelector("[data-mobile-shell]");
 
     const lightbox = root.querySelector("[data-lightbox]");
     const modalDialog = root.querySelector("[data-modal-dialog]");
@@ -273,9 +354,92 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
       lastFocusedCard: null,
       previousBodyOverflow: "",
     };
+    let observer = null;
+    let scrollRaf = null;
 
     const altText = (category, index) => `${category.seoLabel} en México - proyecto ${index + 1}`;
     const isModalOpen = () => lightbox?.getAttribute("data-open") === "true";
+    const formatCount = (value) => String(Math.max(0, value)).padStart(2, "0");
+    const visibleMobileCards = () => mobileCards.filter((card) => !card.hidden);
+
+    const updateMobileCounter = (index, total) => {
+      const safeTotal = Math.max(0, total);
+      const safeIndex = safeTotal === 0 ? 0 : Math.min(Math.max(index, 0), safeTotal - 1);
+
+      if (mobileCurrent) mobileCurrent.textContent = formatCount(safeTotal === 0 ? 0 : safeIndex + 1);
+      if (mobileTotal) mobileTotal.textContent = formatCount(safeTotal);
+      if (mobileLive) {
+        const category = categories[state.currentCategoryIndex];
+        if (safeTotal === 0) {
+          mobileLive.textContent = `${category.label} sin proyectos disponibles`;
+        } else {
+          mobileLive.textContent = `Proyecto ${safeIndex + 1} de ${safeTotal} en ${category.label}`;
+        }
+      }
+    };
+
+    const syncMobileIndexFromScroll = () => {
+      if (!mobileTrack) return;
+      const visibleCards = visibleMobileCards();
+      if (!visibleCards.length) {
+        updateMobileCounter(0, 0);
+        return;
+      }
+
+      const trackCenter = mobileTrack.scrollLeft + mobileTrack.clientWidth / 2;
+      let activeIndex = 0;
+      let minDistance = Number.POSITIVE_INFINITY;
+
+      visibleCards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(cardCenter - trackCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      updateMobileCounter(activeIndex, visibleCards.length);
+    };
+
+    const disconnectObserver = () => {
+      if (!observer) return;
+      observer.disconnect();
+      observer = null;
+    };
+
+    const observeMobileCards = () => {
+      disconnectObserver();
+      if (!mobileTrack || !("IntersectionObserver" in window)) return;
+
+      const visibleCards = visibleMobileCards();
+      if (visibleCards.length <= 1) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          let bestMatch = null;
+
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            if (!bestMatch || entry.intersectionRatio > bestMatch.intersectionRatio) {
+              bestMatch = entry;
+            }
+          });
+
+          if (!bestMatch) return;
+
+          const activeCard = bestMatch.target;
+          const visibleIndex = visibleCards.indexOf(activeCard);
+          if (visibleIndex >= 0) {
+            updateMobileCounter(visibleIndex, visibleCards.length);
+          }
+        },
+        { root: mobileTrack, threshold: [0.5, 0.65, 0.8] }
+      );
+
+      visibleCards.forEach((card) => observer.observe(card));
+    };
 
     const setModalImage = () => {
       if (!modalImage || !modalIndicator) return;
@@ -357,10 +521,9 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
     const renderCategory = (categoryIndex) => {
       const category = categories[categoryIndex];
       const images = category.images.slice(0, safeMaxItems);
+      const total = images.length;
       state.currentCategoryIndex = categoryIndex;
       state.activeImages = images;
-      if (categoryCurrent) categoryCurrent.textContent = String(categoryIndex + 1).padStart(2, "0");
-      if (categoryLabel) categoryLabel.textContent = `Categoría activa: ${category.label}`;
 
       buttons.forEach((button, index) => {
         const isActive = index === categoryIndex;
@@ -387,6 +550,49 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
         trigger.setAttribute("aria-label", `Abrir proyecto ${index + 1} de ${category.seoLabel}`);
       });
 
+      mobileCards.forEach((card, index) => {
+        const src = images[index];
+        const image = card.querySelector("[data-mobile-image]");
+        const trigger = card.querySelector("[data-mobile-trigger]");
+
+        if (!src || !image || !trigger) {
+          card.hidden = true;
+          card.setAttribute("aria-hidden", "true");
+          return;
+        }
+
+        card.hidden = false;
+        card.setAttribute("aria-hidden", "false");
+        image.src = src;
+        image.alt = altText(category, index);
+        trigger.setAttribute("data-image-index", String(index));
+        trigger.setAttribute("aria-label", `Abrir proyecto ${index + 1} de ${category.seoLabel}`);
+      });
+
+      if (mobileHint) {
+        mobileHint.hidden = total <= 1;
+      }
+
+      if (mobileRegion) {
+        mobileRegion.setAttribute("aria-label", `Carrusel de ${category.label}`);
+      }
+
+      if (mobileEmptyState) {
+        mobileEmptyState.hidden = total !== 0;
+      }
+
+      if (mobileShell) {
+        mobileShell.hidden = total === 0;
+      }
+
+      if (mobileTrack) {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        mobileTrack.scrollTo({ left: 0, behavior: reducedMotion ? "auto" : "smooth" });
+      }
+
+      updateMobileCounter(total === 0 ? 0 : 0, total);
+      observeMobileCards();
+
       if (isModalOpen()) {
         if (state.currentImageIndex > images.length - 1) {
           state.currentImageIndex = 0;
@@ -403,7 +609,7 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
     });
 
     root.addEventListener("click", (event) => {
-      const trigger = event.target instanceof Element ? event.target.closest("[data-grid-trigger]") : null;
+      const trigger = event.target instanceof Element ? event.target.closest("[data-grid-trigger], [data-mobile-trigger]") : null;
       if (!trigger || !(trigger instanceof HTMLElement)) return;
       const index = Number(trigger.getAttribute("data-image-index") || "0");
       openModal(index, trigger);
@@ -449,6 +655,20 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
       );
 
       stickyObserver.observe(sentinel);
+    }
+
+    if (mobileTrack) {
+      mobileTrack.addEventListener(
+        "scroll",
+        () => {
+          if (scrollRaf) {
+            window.cancelAnimationFrame(scrollRaf);
+          }
+
+          scrollRaf = window.requestAnimationFrame(syncMobileIndexFromScroll);
+        },
+        { passive: true }
+      );
     }
 
     renderCategory(0);
@@ -503,5 +723,63 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
   .skeleton-bg > img {
     position: relative;
     z-index: 1;
+  }
+
+  @media (max-width: 639px) {
+    [data-category-button][data-active="true"] {
+      border-color: var(--accent-green);
+      background: var(--accent-green);
+      color: white;
+      box-shadow: 0 10px 20px -16px color-mix(in srgb, var(--accent-green) 78%, black);
+    }
+
+    .portfolio-mobile-shell {
+      position: relative;
+      margin-inline: -0.2rem;
+      padding-inline: 0.2rem;
+    }
+
+    .portfolio-mobile-shell::before,
+    .portfolio-mobile-shell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 1rem;
+      pointer-events: none;
+    }
+
+    .portfolio-mobile-shell::before {
+      left: 0;
+      background: linear-gradient(to right, color-mix(in srgb, white 92%, transparent), transparent);
+    }
+
+    .portfolio-mobile-shell::after {
+      right: 0;
+      background: linear-gradient(to left, color-mix(in srgb, white 92%, transparent), transparent);
+    }
+
+    .portfolio-mobile-track {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding: 0.1rem 0.1rem 0.45rem;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: 0.25rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .portfolio-mobile-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    [data-mobile-trigger]:active {
+      transform: translateY(-1px);
+      box-shadow: var(--interactive-shadow-hover);
+    }
   }
 </style>

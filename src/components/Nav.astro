@@ -137,6 +137,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
           aria-expanded="false"
           aria-controls="nav-menu-panel"
           aria-label="Abrir menú"
+          data-menu-toggle
         >
           <svg id="nav-icon-open" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -149,9 +150,16 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     </Container>
 
     <div
+      id="nav-menu-overlay"
+      class="nav-menu-overlay fixed inset-0 z-[1000] bg-slate-950/62 opacity-0 pointer-events-none backdrop-blur-sm transition-opacity duration-200 md:hidden"
+      aria-hidden="true"
+    ></div>
+
+    <div
       id="nav-menu-panel"
-      class="nav-menu-panel fixed inset-0 z-50 flex flex-col gap-4 bg-white/95 p-6 pt-24 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-200 lg:hidden"
+      class="nav-menu-panel fixed inset-x-4 z-[1010] flex max-h-[calc(100dvh-var(--nav-h,4.5rem)-1rem-env(safe-area-inset-bottom))] flex-col gap-4 overflow-y-auto rounded-2xl border border-border/80 bg-white p-4 shadow-[0_30px_65px_-32px_rgba(15,23,42,0.55)] opacity-0 pointer-events-none transition-all duration-200 md:inset-0 md:max-h-none md:rounded-none md:border-0 md:bg-white/95 md:p-6 md:pt-24 md:shadow-none lg:hidden"
       role="dialog"
+      aria-modal="true"
       aria-label="Menú de navegación"
       aria-hidden="true"
     >
@@ -160,8 +168,9 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
           <li>
             <button
               type="button"
-              class="nav-mobile-link flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+              class="nav-mobile-link flex min-h-11 w-full items-center justify-between rounded-xl px-4 py-3 text-left text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
               id="mobile-services-toggle"
+              data-mobile-dropdown-toggle
               data-nav-link
               data-nav-section="servicios"
               data-active={isServicesPath ? "true" : "false"}
@@ -185,7 +194,8 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
               {servicesLinks.map((service) => (
                 <a
                   href={service.href}
-                  class="ui-interactive block rounded-xl px-4 py-2 text-sm text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  class="ui-interactive block min-h-11 rounded-xl px-4 py-2.5 text-sm text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  data-mobile-close-link
                   data-mobile-service-link
                 >
                   {service.label}
@@ -193,7 +203,8 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
               ))}
               <a
                 href="/servicios"
-                class="ui-interactive mt-1 block rounded-xl border-t border-border px-4 py-2 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                class="ui-interactive mt-1 block min-h-11 rounded-xl border-t border-border px-4 py-2.5 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                data-mobile-close-link
                 data-mobile-service-link
               >
                 Ver todos los servicios →
@@ -207,7 +218,8 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
                 href={l.href}
                 data-nav-link
                 data-nav-section={l.section}
-                class="nav-mobile-link block rounded-xl px-4 py-3 text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                data-mobile-close-link
+                class="nav-mobile-link block min-h-11 rounded-xl px-4 py-3 text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
               >
                 {l.label}
               </a>
@@ -220,6 +232,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          data-mobile-close-link
           class="ui-interactive inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-green-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           aria-label="Cotizar por WhatsApp"
         >
@@ -281,14 +294,55 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     transform: translateY(0.5rem);
   }
 
+  .nav-menu-overlay.nav-menu-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .nav-menu-panel.nav-menu-open {
     opacity: 1;
     pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-menu-panel {
+    transform: translateY(0.45rem);
   }
 
   .nav-mobile-link[data-active="true"] {
     color: var(--text-primary);
     background: color-mix(in srgb, var(--brand-orange) 14%, var(--surface));
+  }
+
+  @media (max-width: 767px) {
+    .navbar {
+      background: rgb(255 255 255 / 0.94);
+      border-bottom-color: color-mix(in srgb, var(--border) 78%, white 22%);
+      box-shadow: 0 12px 26px -20px rgb(15 23 42 / 0.32);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .navbar > nav {
+      padding-top: calc(env(safe-area-inset-top) + 0.55rem);
+      padding-bottom: 0.65rem;
+    }
+
+    .nav-menu-panel {
+      left: max(0.75rem, env(safe-area-inset-left));
+      right: max(0.75rem, env(safe-area-inset-right));
+      top: calc(var(--nav-h, 4.5rem) + 0.5rem);
+      padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+      border-color: color-mix(in srgb, var(--border) 72%, white 28%);
+      box-shadow: 0 26px 58px -28px rgb(15 23 42 / 0.52);
+      background: var(--surface);
+    }
+  }
+
+  :global(body.nav-no-scroll) {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
   }
 </style>
 
@@ -296,6 +350,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
   function initNav() {
     const header = document.getElementById("nav-header");
     const menuButton = document.getElementById("nav-menu-button");
+    const menuOverlay = document.getElementById("nav-menu-overlay");
     const menuPanel = document.getElementById("nav-menu-panel");
     const iconOpen = document.getElementById("nav-icon-open");
     const iconClose = document.getElementById("nav-icon-close");
@@ -309,12 +364,15 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     const mobileServicesToggle = document.getElementById("mobile-services-toggle");
     const mobileServicesList = document.getElementById("mobile-services-list");
     const mobileServicesChevron = document.querySelector("[data-mobile-services-chevron]");
+    const mobileCloseLinks = menuPanel.querySelectorAll("[data-mobile-close-link]");
 
     if (!header || !menuButton || !menuPanel || !iconOpen || !iconClose) return;
 
     const isServicesPage = window.location.pathname.startsWith("/servicios");
     const isHomePage = window.location.pathname === "/";
     const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
+    const mobileViewportQuery = window.matchMedia("(max-width: 767px)");
+    let previouslyFocusedElement = null;
 
     function syncNavHeightVar() {
       const navHeight = Math.ceil(header.getBoundingClientRect().height || 0);
@@ -360,6 +418,15 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
       mobileServicesChevron?.classList.toggle("rotate-180", isOpen);
     }
 
+    function isMenuOpen() {
+      return menuButton.getAttribute("aria-expanded") === "true";
+    }
+
+    function setBodyScrollLocked(isLocked) {
+      if (isLocked && !mobileViewportQuery.matches) return;
+      document.body.classList.toggle("nav-no-scroll", isLocked);
+    }
+
     syncNavHeightVar();
     if ("ResizeObserver" in window) {
       const navResizeObserver = new ResizeObserver(() => syncNavHeightVar());
@@ -395,32 +462,50 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     });
 
     function openMenu() {
+      previouslyFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       menuPanel.classList.add("nav-menu-open");
       menuPanel.setAttribute("aria-hidden", "false");
+      menuOverlay?.classList.add("nav-menu-open");
+      menuOverlay?.setAttribute("aria-hidden", "false");
       menuButton.setAttribute("aria-expanded", "true");
       menuButton.setAttribute("aria-label", "Cerrar menú");
       iconOpen.classList.add("hidden");
       iconClose.classList.remove("hidden");
+      setBodyScrollLocked(true);
+      window.requestAnimationFrame(() => menuButton.focus());
     }
 
-    function closeMenu() {
+    function closeMenu({ restoreFocus = false } = {}) {
       menuPanel.classList.remove("nav-menu-open");
       menuPanel.setAttribute("aria-hidden", "true");
+      menuOverlay?.classList.remove("nav-menu-open");
+      menuOverlay?.setAttribute("aria-hidden", "true");
       menuButton.setAttribute("aria-expanded", "false");
       menuButton.setAttribute("aria-label", "Abrir menú");
       iconOpen.classList.remove("hidden");
       iconClose.classList.add("hidden");
       setMobileServicesOpen(false);
+      setBodyScrollLocked(false);
+
+      if (restoreFocus) {
+        const fallbackTarget = menuButton;
+        const target =
+          previouslyFocusedElement instanceof HTMLElement && previouslyFocusedElement.offsetParent !== null
+            ? previouslyFocusedElement
+            : fallbackTarget;
+        window.requestAnimationFrame(() => target.focus());
+      }
     }
 
     menuButton.addEventListener("click", () => {
-      const expanded = menuButton.getAttribute("aria-expanded") === "true";
-      if (expanded) {
-        closeMenu();
+      if (isMenuOpen()) {
+        closeMenu({ restoreFocus: false });
       } else {
         openMenu();
       }
     });
+
+    menuOverlay?.addEventListener("click", () => closeMenu({ restoreFocus: true }));
 
     if (servicesItem && servicesButton && servicesMenu) {
       servicesItem.addEventListener("mouseenter", () => {
@@ -453,40 +538,72 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     }
 
     if (mobileServicesToggle) {
-      mobileServicesToggle.addEventListener("click", () => {
+      mobileServicesToggle.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         const expanded = mobileServicesToggle.getAttribute("aria-expanded") === "true";
         setMobileServicesOpen(!expanded);
       });
     }
 
     if (mobileServicesList) {
-      mobileServicesList.querySelectorAll("[data-mobile-service-link]").forEach((link) => {
-        link.addEventListener("click", closeMenu);
-      });
+      mobileServicesList.addEventListener("click", (event) => event.stopPropagation());
     }
 
-    menuPanel.querySelectorAll(".nav-mobile-link").forEach((link) => {
-      link.addEventListener("click", closeMenu);
+    mobileCloseLinks.forEach((link) => {
+      link.addEventListener("click", () => closeMenu());
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        closeMenu();
+        if (isMenuOpen()) {
+          event.preventDefault();
+          closeMenu({ restoreFocus: true });
+        }
         setDesktopServicesOpen(false);
       }
     });
 
     document.addEventListener("click", (event) => {
       const target = event.target;
+      if (!(target instanceof Node)) return;
 
-      const expanded = menuButton.getAttribute("aria-expanded") === "true";
-      if (expanded && target && !menuPanel.contains(target) && target !== menuButton && !menuButton.contains(target)) {
+      if (isMenuOpen() && !menuPanel.contains(target) && !menuButton.contains(target) && target !== menuOverlay) {
         closeMenu();
       }
 
-      if (servicesItem && target && !servicesItem.contains(target)) {
+      if (servicesItem && !servicesItem.contains(target)) {
         setDesktopServicesOpen(false);
       }
+    });
+
+    const desktopMq = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = (event) => {
+      if (event.matches && isMenuOpen()) {
+        closeMenu();
+      }
+    };
+
+    const closeOnExitMobile = (event) => {
+      if (!event.matches && isMenuOpen()) {
+        closeMenu();
+      }
+    };
+
+    if ("addEventListener" in desktopMq) {
+      desktopMq.addEventListener("change", closeOnDesktop);
+    } else {
+      desktopMq.addListener(closeOnDesktop);
+    }
+
+    if ("addEventListener" in mobileViewportQuery) {
+      mobileViewportQuery.addEventListener("change", closeOnExitMobile);
+    } else {
+      mobileViewportQuery.addListener(closeOnExitMobile);
+    }
+
+    window.addEventListener("pagehide", () => {
+      setBodyScrollLocked(false);
     });
   }
 

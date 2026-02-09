@@ -13,13 +13,24 @@ const serviceSeoDescriptions: Record<string, string> = {
   "impresion-textil": "Impresión textil corporativa para uniformes, merch y activaciones de marca.",
   "diseno-grafico": "Diseño gráfico para producción publicitaria con artes listos para imprimir.",
 };
+
+const serviceMobileDescriptions: Record<string, string> = {
+  "branding-fisico": "Aplicamos tu marca en espacios y puntos de venta corporativos.",
+  "expo-stands": "Diseñamos y producimos stands funcionales para ferias y expos.",
+  "papeleria-corporativa": "Papelería premium para ventas, operación y comunicación interna.",
+  "grabado-laser": "Personalizamos piezas corporativas con acabados precisos en láser.",
+  "impresion-textil": "Uniformes y merch textil para equipos, eventos y activaciones.",
+  "diseno-grafico": "Diseño publicitario con artes listos para producción e impresión.",
+};
+
+const servicesTotal = String(services.length).padStart(2, "0");
 ---
 
 <section id="servicios" class="section-bg section-orange-blue relative overflow-hidden" aria-labelledby="servicios-heading">
   <div class="section-glow absolute inset-0 [--section-orange-glow:9%] [--section-green-glow:8%]" aria-hidden="true"></div>
   <div class="section-grid section-grid-soft absolute inset-0" aria-hidden="true"></div>
 
-  <Container class="section-panel relative py-10 md:py-12">
+  <Container class="section-panel relative py-8 sm:py-10 md:py-12">
     <SectionHeader
       id="servicios-heading"
       label="SERVICIOS"
@@ -27,46 +38,77 @@ const serviceSeoDescriptions: Record<string, string> = {
       accent="branding"
       titleEnd=" para empresas"
       subtitle="Branding físico corporativo, stands, papelería, grabado láser e impresión textil para empresas en México."
+      class="services-header"
     />
 
-    <ul class="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6" role="list">
-      {services.map((service) => (
-        <li>
-          <a
-            href={`/servicios/${service.slug}`}
-            class:list={[
-              "ui-interactive group relative isolate flex h-full min-h-[15.5rem] cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm focus-visible:border-accent-green/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green focus-visible:ring-offset-2 sm:min-h-[16rem] sm:p-6",
-              "hover:border-accent-green/50",
-            ]}
-            aria-label={`Ver detalle de ${service.name}`}
-          >
-            <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white/96 to-white/99" aria-hidden="true"></div>
-            <div
-              class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent-green)_12%,transparent),transparent_46%,color-mix(in_srgb,var(--brand-blue)_6%,transparent))]"
-              aria-hidden="true"
-            ></div>
+    <div class="relative mt-8 sm:mt-0">
+      <div class="mb-2 flex items-center justify-between sm:hidden" aria-hidden="true">
+        <p class="text-xs tabular-nums text-text-muted">
+          <span data-services-current class="font-semibold text-text-primary">01</span>
+          <span class="ml-1">/ {servicesTotal}</span>
+        </p>
+        <p class="inline-flex items-center gap-1 text-[11px] font-medium text-text-muted">
+          <span>Desliza</span>
+          <span aria-hidden="true">→</span>
+        </p>
+      </div>
+      <span class="sr-only" data-services-live aria-live="polite" aria-atomic="true">
+        Servicio 1 de {services.length}
+      </span>
 
-            <div class="relative z-10 flex items-start gap-3">
-              <span
-                class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-accent-green/20 bg-accent-green/5 text-brand-blue transition-colors duration-300 group-hover:border-accent-green/35 group-hover:bg-accent-green/10 group-hover:text-accent-green"
-                aria-hidden="true"
+      <div class="services-carousel-shell">
+        <ul
+          class="services-track grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6"
+          role="list"
+          data-services-track
+          aria-label="Servicios de Enfoque"
+        >
+          {services.map((service, index) => (
+            <li class="w-[84vw] shrink-0 snap-start sm:w-auto sm:shrink sm:snap-none" data-service-item data-service-index={index}>
+              <a
+                href={`/servicios/${service.slug}`}
+                class:list={[
+                  "services-card ui-interactive group relative isolate flex h-full min-h-[13.1rem] cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-surface p-4 shadow-sm focus-visible:border-accent-green/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green focus-visible:ring-offset-2 sm:min-h-[16rem] sm:p-6",
+                  "hover:border-accent-green/50",
+                ]}
+                aria-label={`Ver detalle de ${service.name}`}
+                data-service-card
               >
-                <ServiceIcon icon={service.icon} class="h-5 w-5" />
-              </span>
+                <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-white/96 to-white/99" aria-hidden="true"></div>
+                <div
+                  class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--accent-green)_12%,transparent),transparent_46%,color-mix(in_srgb,var(--brand-blue)_6%,transparent))]"
+                  aria-hidden="true"
+                ></div>
 
-              <h3 class="text-base font-semibold leading-snug text-text-primary sm:text-lg">
-                {service.name}
-              </h3>
-            </div>
-            <p class="relative z-10 mt-3 text-sm leading-relaxed text-text-secondary">
-              {serviceSeoDescriptions[service.slug] ?? service.shortDescription}
-            </p>
-          </a>
-        </li>
-      ))}
-    </ul>
+                <div class="relative z-10 flex items-start gap-2.5 sm:gap-3">
+                  <span
+                    class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-accent-green/20 bg-accent-green/5 text-brand-blue transition-colors duration-300 group-hover:border-accent-green/35 group-hover:bg-accent-green/10 group-hover:text-accent-green sm:h-10 sm:w-10"
+                    aria-hidden="true"
+                  >
+                    <ServiceIcon icon={service.icon} class="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+                  </span>
 
-    <div class="mt-10 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center sm:gap-4">
+                  <h3 class="text-[0.98rem] font-semibold leading-snug text-text-primary sm:text-lg">
+                    {service.name}
+                  </h3>
+                </div>
+                <p class="relative z-10 mt-2 text-[0.84rem] leading-relaxed text-text-secondary sm:hidden">
+                  {serviceMobileDescriptions[service.slug] ?? service.shortDescription}
+                </p>
+                <p class="relative z-10 mt-2 hidden text-sm leading-relaxed text-text-secondary sm:mt-3 sm:block">
+                  {serviceSeoDescriptions[service.slug] ?? service.shortDescription}
+                </p>
+                <p class="relative z-10 mt-auto pt-3 text-xs font-semibold tracking-wide text-brand-blue/85 transition-colors group-hover:text-brand-blue group-focus-visible:text-brand-blue">
+                  Ver detalle <span aria-hidden="true">→</span>
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center sm:gap-4">
       <Button href="/#contacto" variant="primary" size="md" class="min-h-11 w-full !rounded-xl sm:w-auto">
         Cotizar proyecto
       </Button>
@@ -86,7 +128,7 @@ const serviceSeoDescriptions: Record<string, string> = {
       </Button>
     </div>
 
-    <div class="mt-4 text-center">
+    <div class="mt-3 text-center sm:mt-4">
       <a
         href="/servicios"
         class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
@@ -97,3 +139,119 @@ const serviceSeoDescriptions: Record<string, string> = {
     </div>
   </Container>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const track = document.querySelector("[data-services-track]");
+    const currentIndicator = document.querySelector("[data-services-current]");
+    const liveRegion = document.querySelector("[data-services-live]");
+    if (!track || !currentIndicator) return;
+
+    const cards = Array.from(track.querySelectorAll("[data-service-item]"));
+    if (!cards.length) return;
+
+    let rafId = null;
+
+    const getActiveIndex = () => {
+      const trackCenter = track.scrollLeft + track.clientWidth / 2;
+      let active = 0;
+      let minDistance = Number.POSITIVE_INFINITY;
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(cardCenter - trackCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          active = index;
+        }
+      });
+
+      return active;
+    };
+
+    const updateIndicator = () => {
+      const active = getActiveIndex();
+      currentIndicator.textContent = String(active + 1).padStart(2, "0");
+      if (liveRegion) {
+        liveRegion.textContent = `Servicio ${active + 1} de ${cards.length}`;
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = window.requestAnimationFrame(updateIndicator);
+    };
+
+    track.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateIndicator);
+    updateIndicator();
+  });
+</script>
+
+<style>
+  @media (max-width: 639px) {
+    :global(.services-header .section-title) {
+      margin-top: 0.55rem;
+      font-size: clamp(1.68rem, 1.5rem + 0.7vw, 1.9rem);
+      line-height: 1.12;
+    }
+
+    :global(.services-header .section-subtitle) {
+      margin-top: 0.7rem;
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+
+    .services-carousel-shell {
+      position: relative;
+      margin-inline: -0.25rem;
+      padding-inline: 0.25rem;
+    }
+
+    .services-carousel-shell::before,
+    .services-carousel-shell::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      width: 1rem;
+      pointer-events: none;
+    }
+
+    .services-carousel-shell::before {
+      left: 0;
+      background: linear-gradient(to right, color-mix(in srgb, white 92%, transparent), transparent);
+    }
+
+    .services-carousel-shell::after {
+      right: 0;
+      background: linear-gradient(to left, color-mix(in srgb, white 92%, transparent), transparent);
+    }
+
+    .services-track {
+      margin-top: 0;
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding: 0.1rem 0.1rem 0.45rem;
+      scroll-padding-inline: 0.2rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      touch-action: pan-x;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .services-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .services-card:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+      border-color: color-mix(in srgb, var(--accent-green) 35%, var(--border));
+    }
+  }
+</style>

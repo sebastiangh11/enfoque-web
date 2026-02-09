@@ -9,7 +9,7 @@ import SectionHeader from "./SectionHeader.astro";
   <div class="section-glow absolute inset-0 [--section-orange-glow:10%] [--section-green-glow:8%]" aria-hidden="true"></div>
   <div class="section-grid section-grid-soft absolute inset-0" aria-hidden="true"></div>
 
-  <Container class="section-panel relative overflow-x-clip py-10 md:py-12">
+  <Container class="section-panel relative overflow-x-clip py-8 sm:py-10 md:py-12">
     <SectionHeader
       id="portafolio-heading"
       label="PORTAFOLIO"
@@ -19,11 +19,11 @@ import SectionHeader from "./SectionHeader.astro";
       subtitle="Casos de branding físico, stands, papelería corporativa, grabado láser e impresión textil para empresas en México."
     />
 
-    <div class="mt-10">
+    <div class="mt-8 sm:mt-10">
       <PortfolioGallery maxItems={6} />
     </div>
 
-    <div class="mt-12 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
+    <div class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center sm:gap-4">
       <Button
         href="/#contacto"
         variant="primary"
@@ -48,7 +48,7 @@ import SectionHeader from "./SectionHeader.astro";
       </Button>
     </div>
 
-    <div class="mt-5 text-center">
+    <div class="mt-3 text-center sm:mt-5">
       <a
         href="/portafolio"
         class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
