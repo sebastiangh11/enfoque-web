@@ -6,14 +6,14 @@ import Hero from "../components/Hero.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
 import PortfolioPreview from "../components/PortfolioPreview.astro";
 import ProcessPreview from "../components/ProcessPreview.astro";
-import AboutPreview from "../components/AboutPreview.astro";
+import Nosotros from "../components/Nosotros.astro";
 import ContactPreview from "../components/ContactPreview.astro";
-import Footer from "../components/Footer.astro";
 ---
 
 <BaseLayout
-  title="Enfoque en Medios Publicitarios"
-  description="Diseñamos, producimos e instalamos materiales publicitarios premium para empresas. CDMX y cobertura nacional."
+  title="Publicidad impresa y branding físico corporativo en México | Enfoque"
+  description="Diseño, producción e instalación de publicidad impresa, stands, papelería y branding físico para empresas en México."
+  pathname="/"
 >
   <!-- Navbar -->
   <Nav />
@@ -33,12 +33,10 @@ import Footer from "../components/Footer.astro";
     <ProcessPreview />
 
     <!-- About / Nosotros -->
-    <AboutPreview />
+    <Nosotros />
 
     <!-- Contact / Cotización -->
     <ContactPreview />
   </main>
 
-  <!-- Footer -->
-  <Footer />
 </BaseLayout>

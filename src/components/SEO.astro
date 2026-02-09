@@ -1,0 +1,68 @@
+---
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SEO,
+  LOCAL_BUSINESS_SOCIALS,
+  SITE_DOMAIN,
+  SITE_NAME,
+  toAbsoluteUrl,
+} from "../config/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  pathname?: string;
+  image?: string;
+}
+
+const {
+  title = DEFAULT_SEO.title,
+  description = DEFAULT_SEO.description,
+  pathname = "/",
+  image = DEFAULT_OG_IMAGE,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? SITE_DOMAIN;
+const canonicalUrl = toAbsoluteUrl(pathname, siteUrl);
+const imageUrl = toAbsoluteUrl(image, siteUrl);
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: SITE_NAME,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "José María Roa Bárcenas 5",
+    addressLocality: "Ciudad de México",
+    addressCountry: "MX",
+  },
+  telephone: "+52 55 7457 0826",
+  email: "ventas@segac.com.mx",
+  url: siteUrl,
+  sameAs: LOCAL_BUSINESS_SOCIALS,
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="index,follow" />
+
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content="es_MX" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" />
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>

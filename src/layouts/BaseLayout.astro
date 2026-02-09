@@ -1,21 +1,15 @@
 ---
 import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import SEO from "../components/SEO.astro";
+import { DEFAULT_OG_IMAGE, DEFAULT_SEO } from "../config/site";
 
 const {
-  title = "Enfoque en Medios Publicitarios | Branding físico y producción publicitaria en México",
-  description =
-    "Diseñamos y producimos materiales publicitarios premium para empresas en México. Cotiza por WhatsApp y recibe propuesta en 24 hrs hábiles.",
+  title = DEFAULT_SEO.title,
+  description = DEFAULT_SEO.description,
+  pathname = Astro.url.pathname,
+  image = DEFAULT_OG_IMAGE,
 } = Astro.props;
-
-const siteUrl = "https://enfoque-web.vercel.app/";
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Enfoque en Medios Publicitarios",
-  url: siteUrl,
-  telephone: "+525574570826",
-  areaServed: "MX",
-};
 ---
 
 <!doctype html>
@@ -23,20 +17,15 @@ const localBusinessSchema = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
-
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-
-    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)}></script>
-
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEO title={title} description={description} pathname={pathname} image={image} />
   </head>
 
-  <body class="min-h-screen bg-surface text-text-primary antialiased">
-    <slot />
+  <body class="min-h-screen text-text-primary antialiased">
+    <div class="site-bg min-h-screen">
+      <slot />
+      <Footer />
+    </div>
   </body>
 </html>

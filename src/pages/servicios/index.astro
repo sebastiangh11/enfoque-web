@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import Nav from "../../components/Nav.astro";
-import Footer from "../../components/Footer.astro";
 import Container from "../../components/Container.astro";
 import Button from "../../components/Button.astro";
 import ServiceIcon from "../../components/ServiceIcon.astro";
@@ -14,19 +13,15 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
 ---
 
 <BaseLayout
-  title="Servicios | Enfoque en Medios Publicitarios"
-  description="Servicios de branding físico, stands, papelería, grabado láser, impresión textil y diseño aplicado para empresas en México."
+  title="Servicios de branding físico y publicidad impresa | Enfoque"
+  description="Branding corporativo, stands, impresión premium, grabado láser e instalación nacional para empresas."
+  pathname="/servicios"
 >
   <Nav />
 
   <main>
-    <section class="relative border-t border-border py-16 md:py-20" aria-labelledby="servicios-page-heading">
-      <div
-        class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_12%_10%,color-mix(in_srgb,var(--brand-blue)_10%,transparent),transparent_44%),radial-gradient(circle_at_85%_16%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_42%),radial-gradient(circle_at_65%_84%,color-mix(in_srgb,var(--accent-green)_8%,transparent),transparent_48%)]"
-        aria-hidden="true"
-      ></div>
-
-      <Container class="relative">
+    <section class="section-bg section-shell" aria-labelledby="servicios-page-heading">
+      <Container class="section-panel relative py-10 md:py-12">
         <header class="mx-auto max-w-3xl text-center">
           <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">SERVICIOS</p>
           <h1 id="servicios-page-heading" class="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
@@ -37,7 +32,7 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
             Producción premium, procesos claros y adaptación real a cada reto.
           </p>
 
-          <div class="mt-6 inline-flex items-center rounded-full border border-border bg-surface-soft px-4 py-2 text-sm font-medium text-text-secondary shadow-sm">
+          <div class="surface-chip mt-6 inline-flex items-center px-4 py-2 text-sm font-medium text-text-secondary shadow-sm">
             En construcción
           </div>
         </header>
@@ -48,8 +43,7 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
               <a
                 href={`/servicios/${service.slug}`}
                 class:list={[
-                  "group relative isolate block h-full overflow-hidden rounded-2xl border bg-surface p-7 shadow-sm transition-all duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2",
-                  "hover:-translate-y-0.5 hover:shadow-xl",
+                  "ui-interactive focus-ring group relative isolate block h-full overflow-hidden rounded-2xl border bg-surface p-7 shadow-sm",
                   service.accent === "orange"
                     ? "border-border hover:border-brand-orange/45"
                     : "border-border hover:border-accent-green/45",
@@ -58,7 +52,7 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
               >
                 <div
                   class:list={[
-                    "pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100",
+                    "pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100",
                     service.accent === "orange"
                       ? "bg-[radial-gradient(circle_at_14%_14%,color-mix(in_srgb,var(--brand-orange)_14%,transparent),transparent_44%),radial-gradient(circle_at_86%_88%,color-mix(in_srgb,var(--brand-blue)_12%,transparent),transparent_45%),linear-gradient(135deg,color-mix(in_srgb,var(--brand-orange)_7%,white),white_58%)]"
                       : "bg-[radial-gradient(circle_at_14%_14%,color-mix(in_srgb,var(--accent-green)_15%,transparent),transparent_44%),radial-gradient(circle_at_86%_88%,color-mix(in_srgb,var(--brand-blue)_10%,transparent),transparent_45%),linear-gradient(135deg,color-mix(in_srgb,var(--accent-green)_7%,white),white_58%)]",
@@ -93,7 +87,7 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
           ))}
         </ul>
 
-        <section class="mt-12 rounded-2xl border border-border bg-surface p-5 shadow-sm md:p-6" aria-label="Cómo trabajamos">
+        <section class="surface-card mt-12 p-5 md:p-6" aria-label="Cómo trabajamos">
           <div class="grid gap-4 text-center md:grid-cols-3 md:text-left">
             <article class="rounded-xl bg-surface-soft px-4 py-4">
               <h3 class="text-sm font-semibold uppercase tracking-[0.16em] text-brand-blue">Claridad</h3>
@@ -142,6 +136,4 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
       </Container>
     </section>
   </main>
-
-  <Footer />
 </BaseLayout>

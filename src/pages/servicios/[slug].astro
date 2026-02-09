@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import Nav from "../../components/Nav.astro";
-import Footer from "../../components/Footer.astro";
 import Container from "../../components/Container.astro";
 import Button from "../../components/Button.astro";
 import ServiceIcon from "../../components/ServiceIcon.astro";
@@ -19,6 +18,11 @@ const { service } = Astro.props;
 
 const fallbackService = servicesBySlug.get(Astro.params.slug ?? "") ?? services[0];
 const currentService = service ?? fallbackService;
+const serviceNameForTitle = currentService.name.trim();
+const seoTitle = /para empresas$/i.test(serviceNameForTitle)
+  ? `${serviceNameForTitle} | Enfoque`
+  : `${serviceNameForTitle} para empresas | Enfoque`;
+const seoDescription = currentService.shortDescription;
 
 const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
   `Hola, me interesa cotizar ${currentService.name}. ¿Me compartes opciones y tiempos?`
@@ -27,27 +31,22 @@ const whatsappUrl = `https://wa.me/525574570826?text=${encodeURIComponent(
 const otherServices = services.filter((item) => item.slug !== currentService.slug).slice(0, 3);
 ---
 
-<BaseLayout title={currentService.seoTitle} description={currentService.seoDescription}>
+<BaseLayout title={seoTitle} description={seoDescription} pathname={`/servicios/${currentService.slug}`}>
   <Nav />
 
   <main>
-    <section class="relative border-t border-border py-14 md:py-20" aria-labelledby="servicio-heading">
-      <div
-        class="pointer-events-none absolute inset-0 opacity-90 [background:radial-gradient(circle_at_12%_10%,color-mix(in_srgb,var(--brand-blue)_10%,transparent),transparent_44%),radial-gradient(circle_at_85%_16%,color-mix(in_srgb,var(--brand-orange)_10%,transparent),transparent_42%),radial-gradient(circle_at_65%_84%,color-mix(in_srgb,var(--accent-green)_8%,transparent),transparent_48%)]"
-        aria-hidden="true"
-      ></div>
-
-      <Container class="relative">
+    <section class="section-bg section-shell" aria-labelledby="servicio-heading">
+      <Container class="section-panel relative py-10 md:py-12">
         <a
           href="/servicios"
-          class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+          class="focus-ring inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue"
         >
           <span class="mr-1" aria-hidden="true">←</span>
           Volver a servicios
         </a>
 
         <header class="mt-6 max-w-3xl">
-          <div class="inline-flex items-center rounded-full border border-border bg-surface-soft px-4 py-2 text-sm font-medium text-text-secondary shadow-sm">
+          <div class="surface-chip inline-flex items-center px-4 py-2 text-sm font-medium text-text-secondary shadow-sm">
             En construcción: estamos documentando proyectos y casos reales. Si necesitas cotización, contáctanos.
           </div>
 
@@ -74,7 +73,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
         </header>
 
         <div class="mt-12 grid gap-6 lg:grid-cols-2">
-          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="resumen-heading">
+          <section class="surface-card p-6" aria-labelledby="resumen-heading">
             <h2 id="resumen-heading" class="text-xl font-semibold text-text-primary">Resumen</h2>
             <p class="mt-3 text-sm leading-relaxed text-text-secondary">
               Diseñamos y producimos con claridad de proceso, foco en calidad y tiempos de respuesta ágiles para equipos de marketing, compras y dirección.
@@ -89,7 +88,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
             </ul>
           </section>
 
-          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="incluye-heading">
+          <section class="surface-card p-6" aria-labelledby="incluye-heading">
             <h2 id="incluye-heading" class="text-xl font-semibold text-text-primary">Qué incluye</h2>
             <ul class="mt-4 space-y-2 text-sm text-text-secondary">
               {currentService.includes.map((item) => (
@@ -103,7 +102,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
         </div>
 
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
-          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="ideal-heading">
+          <section class="surface-card p-6" aria-labelledby="ideal-heading">
             <h2 id="ideal-heading" class="text-xl font-semibold text-text-primary">Ideal para</h2>
             <ul class="mt-4 space-y-2 text-sm text-text-secondary">
               {currentService.useCases.map((item) => (
@@ -115,7 +114,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
             </ul>
           </section>
 
-          <section class="rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="cotizar-heading">
+          <section class="surface-card p-6" aria-labelledby="cotizar-heading">
             <h2 id="cotizar-heading" class="text-xl font-semibold text-text-primary">Qué necesitamos para cotizar</h2>
             <ul class="mt-4 space-y-2 text-sm text-text-secondary">
               {currentService.whatWeNeed.map((item) => (
@@ -128,7 +127,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
           </section>
         </div>
 
-        <section class="mt-6 rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="proceso-heading">
+        <section class="surface-card mt-6 p-6" aria-labelledby="proceso-heading">
           <h2 id="proceso-heading" class="text-xl font-semibold text-text-primary">Proceso</h2>
           <ol class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
             {currentService.process.map((step, index) => (
@@ -140,7 +139,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
           </ol>
         </section>
 
-        <section class="mt-6 rounded-2xl border border-border bg-surface p-6 shadow-sm" aria-labelledby="cta-servicio-heading">
+        <section class="surface-card mt-6 p-6" aria-labelledby="cta-servicio-heading">
           <h2 id="cta-servicio-heading" class="text-xl font-semibold text-text-primary">Siguiente paso</h2>
           <p class="mt-3 text-sm leading-relaxed text-text-secondary">
             Compártenos tu alcance y tiempos. Te ayudamos a estructurar una propuesta clara y viable para avanzar rápido.
@@ -171,7 +170,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
           <div class="mt-4">
             <a
               href="/#portafolio"
-              class="inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              class="focus-ring inline-flex items-center text-sm font-semibold text-text-secondary transition-colors hover:text-brand-blue"
             >
               Ver portafolio completo
               <span class="ml-1" aria-hidden="true">→</span>
@@ -185,7 +184,7 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
             {otherServices.map((item) => (
               <a
                 href={`/servicios/${item.slug}`}
-                class="group rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-blue/35 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+                class="ui-interactive focus-ring group rounded-2xl border border-border bg-surface p-5 shadow-sm hover:border-brand-blue/35"
               >
                 <div class="flex items-center gap-3">
                   <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface-soft text-brand-blue" aria-hidden="true">
@@ -205,6 +204,4 @@ const otherServices = services.filter((item) => item.slug !== currentService.slu
       </Container>
     </section>
   </main>
-
-  <Footer />
 </BaseLayout>

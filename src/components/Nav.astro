@@ -21,11 +21,10 @@ const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/525574
 const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 ---
 
-<div id="nav-shadow-sentinel" class="pointer-events-none h-px w-full" aria-hidden="true"></div>
 <!-- Sticky headers break if an ancestor uses overflow/transform/filter; keep those styles on page content wrappers, not around this header. -->
 <header
   id="nav-header"
-  class="sticky top-0 z-50 border-b border-border/60 bg-white/80 backdrop-blur-md transition-all duration-200"
+  class="navbar border-b border-border/60 bg-white/80 transition-all duration-200"
 >
   <nav class="relative py-3" aria-label="Navegación principal">
     <Container as="div" class="relative z-[60] flex items-center justify-between gap-4">
@@ -49,7 +48,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
             <button
               type="button"
               id="nav-services-button"
-              class="nav-link relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-text-secondary transition-all duration-200 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+              class="nav-link ui-interactive relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
               data-nav-link
               data-nav-section="servicios"
               data-active={isServicesPath ? "true" : "false"}
@@ -72,7 +71,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 
             <div
               id="nav-services-menu"
-              class="services-menu invisible absolute left-0 top-full z-50 mt-2 w-[21rem] rounded-xl border border-border bg-surface p-2 opacity-0 shadow-lg ring-1 ring-black/5 transition duration-200 ease-out"
+              class="services-menu invisible absolute left-0 top-full z-50 mt-2 w-[21rem] rounded-2xl border border-border/90 bg-surface/98 p-3 opacity-0 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.45)] ring-1 ring-black/5 transition duration-200 ease-out"
               role="menu"
               aria-label="Submenú de servicios"
               aria-hidden="true"
@@ -82,7 +81,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
                   <a
                     href={service.href}
                     role="menuitem"
-                    class="block rounded-lg px-4 py-2 text-sm font-medium text-text-secondary transition-all duration-150 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                    class="ui-interactive block rounded-xl px-4 py-2 text-sm font-medium text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
                     data-services-link
                   >
                     {service.label}
@@ -94,7 +93,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
                 <a
                   href="/servicios"
                   role="menuitem"
-                  class="block rounded-lg px-4 py-2 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  class="ui-interactive block rounded-xl px-4 py-2 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
                   data-services-link
                 >
                   Ver todos los servicios →
@@ -108,7 +107,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
               href={l.href}
               data-nav-link
               data-nav-section={l.section}
-              class="nav-link relative rounded-full px-3 py-2 text-sm font-semibold text-text-secondary transition-all duration-200 hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+              class="nav-link ui-interactive relative rounded-full px-3 py-2 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
             >
               <span class="relative z-10">{l.label}</span>
             </a>
@@ -119,7 +118,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex min-h-11 items-center justify-center rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+          class="ui-interactive inline-flex min-h-11 items-center justify-center rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           aria-label="Cotizar por WhatsApp"
         >
           <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -134,7 +133,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
         <button
           id="nav-menu-button"
           type="button"
-          class="flex h-11 w-11 items-center justify-center rounded-full border border-border text-text-primary transition-colors hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+          class="ui-interactive flex h-11 w-11 items-center justify-center rounded-full border border-border text-text-primary hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           aria-expanded="false"
           aria-controls="nav-menu-panel"
           aria-label="Abrir menú"
@@ -186,7 +185,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
               {servicesLinks.map((service) => (
                 <a
                   href={service.href}
-                  class="block rounded-lg px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                  class="ui-interactive block rounded-xl px-4 py-2 text-sm text-text-secondary hover:bg-surface-soft hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
                   data-mobile-service-link
                 >
                   {service.label}
@@ -194,7 +193,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
               ))}
               <a
                 href="/servicios"
-                class="mt-1 block rounded-lg border-t border-border px-4 py-2 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
+                class="ui-interactive mt-1 block rounded-xl border-t border-border px-4 py-2 text-sm font-semibold text-text-secondary hover:bg-surface-soft hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-inset"
                 data-mobile-service-link
               >
                 Ver todos los servicios →
@@ -218,12 +217,12 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 
         <div class="mt-5 border-t border-border pt-5">
           <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-green-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
-            aria-label="Cotizar por WhatsApp"
-          >
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ui-interactive inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-green-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+          aria-label="Cotizar por WhatsApp"
+        >
             <svg class="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
               <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z" />
@@ -237,21 +236,28 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 </header>
 
 <style>
-  #nav-header[data-scrolled="true"] {
-    box-shadow: 0 10px 30px -24px rgb(0 0 0 / 0.25);
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px -24px rgb(0 0 0 / 0.2);
   }
 
   .nav-link::after {
     content: "";
     position: absolute;
-    left: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.38rem;
-    height: 2px;
-    transform: scaleX(0);
-    transform-origin: left;
-    background: linear-gradient(90deg, var(--brand-orange), color-mix(in srgb, var(--brand-orange) 40%, var(--brand-blue)));
-    transition: transform 200ms ease;
+    left: 0.62rem;
+    right: 0.62rem;
+    bottom: 0.48rem;
+    height: 0.35rem;
+    border-radius: 999px;
+    z-index: 0;
+    opacity: 0;
+    transform: scaleX(0.84);
+    background: color-mix(in srgb, var(--brand-orange) 45%, transparent);
+    transition: opacity 200ms ease, transform 200ms ease;
   }
 
   .nav-link[data-active="true"] {
@@ -261,6 +267,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 
   .nav-link[data-active="true"]::after,
   .nav-link:hover::after {
+    opacity: 1;
     transform: scaleX(1);
   }
 
@@ -281,7 +288,7 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
 
   .nav-mobile-link[data-active="true"] {
     color: var(--text-primary);
-    background: color-mix(in srgb, var(--surface-soft) 72%, transparent);
+    background: color-mix(in srgb, var(--brand-orange) 14%, var(--surface));
   }
 </style>
 
@@ -293,7 +300,6 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     const iconOpen = document.getElementById("nav-icon-open");
     const iconClose = document.getElementById("nav-icon-close");
     const navLinks = document.querySelectorAll("[data-nav-link]");
-    const navShadowSentinel = document.getElementById("nav-shadow-sentinel");
 
     const servicesItem = document.querySelector("[data-services-item]");
     const servicesButton = document.getElementById("nav-services-button");
@@ -309,7 +315,6 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     const isServicesPage = window.location.pathname.startsWith("/servicios");
     const isHomePage = window.location.pathname === "/";
     const sectionIds = ["servicios", "portafolio", "proceso", "nosotros", "contacto"];
-    const sectionRatioMap = new Map();
 
     function syncNavHeightVar() {
       const navHeight = Math.ceil(header.getBoundingClientRect().height || 0);
@@ -355,56 +360,6 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
       mobileServicesChevron?.classList.toggle("rotate-180", isOpen);
     }
 
-    function updateActiveFromVisibleSections() {
-      if (!sectionRatioMap.size) return;
-      const best = [...sectionRatioMap.entries()].sort((a, b) => b[1] - a[1])[0];
-      if (!best) return;
-      setActiveBySectionId(best[0]);
-    }
-
-    function setupSectionObserver() {
-      if (isServicesPage || !("IntersectionObserver" in window)) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const id = entry.target.id;
-            if (!id) return;
-
-            if (entry.isIntersecting) {
-              sectionRatioMap.set(id, entry.intersectionRatio);
-            } else {
-              sectionRatioMap.delete(id);
-            }
-          });
-
-          updateActiveFromVisibleSections();
-        },
-        {
-          root: null,
-          rootMargin: "-25% 0px -65% 0px",
-          threshold: [0, 0.1, 0.25],
-        }
-      );
-
-      sectionIds.forEach((id) => {
-        const section = document.getElementById(id);
-        if (section) observer.observe(section);
-      });
-    }
-
-    function setupScrolledObserver() {
-      if (!navShadowSentinel || !("IntersectionObserver" in window)) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          header.setAttribute("data-scrolled", entry.isIntersecting ? "false" : "true");
-        },
-        { root: null, threshold: 0, rootMargin: "-10px 0px 0px 0px" }
-      );
-      observer.observe(navShadowSentinel);
-    }
-
     syncNavHeightVar();
     if ("ResizeObserver" in window) {
       const navResizeObserver = new ResizeObserver(() => syncNavHeightVar());
@@ -414,8 +369,6 @@ const isServicesPath = Astro.url.pathname.startsWith("/servicios");
     }
 
     setActiveByHash();
-    setupSectionObserver();
-    setupScrolledObserver();
     window.addEventListener("hashchange", setActiveByHash);
 
     navLinks.forEach((link) => {

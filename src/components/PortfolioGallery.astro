@@ -101,12 +101,12 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
 <div class="relative" data-portfolio-gallery-root>
   <div class="h-px" data-sticky-sentinel aria-hidden="true"></div>
 
-  <div class="mb-3 flex items-center justify-between md:mb-4">
+  <div class="mb-3 flex items-center justify-between md:mb-4 md:hidden">
     <p class="text-xs tabular-nums text-text-muted">
       <span data-category-current class="font-semibold text-text-primary">01</span>
       <span class="ml-1">/ {totalCategoriesLabel}</span>
     </p>
-    <p class="inline-flex items-center gap-1 text-[11px] font-medium text-text-muted md:hidden" aria-hidden="true">
+    <p class="inline-flex items-center gap-1 text-[11px] font-medium text-text-muted" aria-hidden="true">
       <span>Desliza</span>
       <span aria-hidden="true">→</span>
     </p>
@@ -128,7 +128,7 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
         {categories.map((category, index) => (
           <button
             type="button"
-            class="group min-h-11 shrink-0 snap-start rounded-full border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-text-secondary shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-border hover:bg-surface-soft hover:text-text-primary hover:shadow-md focus-visible:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 motion-reduce:transform-none sm:px-5 sm:text-base"
+            class="ui-interactive min-h-11 shrink-0 snap-start rounded-full border border-border bg-white px-4 py-2.5 text-sm font-semibold text-text-secondary shadow-sm hover:border-accent-green/45 hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 motion-reduce:transform-none sm:px-5 sm:text-base"
             data-category-button
             data-category-index={index}
             data-active={index === 0 ? "true" : "false"}
@@ -150,7 +150,7 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
         <li data-grid-card hidden={!isVisible} aria-hidden={!isVisible ? "true" : "false"}>
           <button
             type="button"
-            class="group block w-full overflow-hidden rounded-2xl border border-border bg-surface text-left shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:border-accent-green/35 hover:shadow-md hover:shadow-black/8 focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
+            class="ui-interactive group block w-full overflow-hidden rounded-2xl border border-border bg-surface text-left shadow-sm hover:border-accent-green/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 motion-reduce:transform-none motion-reduce:transition-none"
             data-grid-trigger
             data-image-index={slotIndex}
           >
@@ -162,18 +162,11 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
                 decoding="async"
                 width="1600"
                 height="1000"
-                class="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.02] motion-reduce:transform-none motion-reduce:transition-none"
+                class="h-full w-full object-cover"
                 data-grid-image
               />
 
               <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" aria-hidden="true"></div>
-
-              <span
-                class="absolute left-3 top-3 inline-flex items-center rounded-full border border-border/80 bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-text-secondary shadow-sm backdrop-blur-sm"
-                data-grid-chip
-              >
-                {initialCategory.label}
-              </span>
             </div>
           </button>
         </li>
@@ -378,10 +371,9 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
       cards.forEach((card, index) => {
         const src = images[index];
         const image = card.querySelector("[data-grid-image]");
-        const chip = card.querySelector("[data-grid-chip]");
         const trigger = card.querySelector("[data-grid-trigger]");
 
-        if (!src || !image || !chip || !trigger) {
+        if (!src || !image || !trigger) {
           card.hidden = true;
           card.setAttribute("aria-hidden", "true");
           return;
@@ -391,7 +383,6 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
         card.setAttribute("aria-hidden", "false");
         image.src = src;
         image.alt = altText(category, index);
-        chip.textContent = category.label;
         trigger.setAttribute("data-image-index", String(index));
         trigger.setAttribute("aria-label", `Abrir proyecto ${index + 1} de ${category.seoLabel}`);
       });
@@ -475,16 +466,16 @@ const totalCategoriesLabel = String(categories.length).padStart(2, "0");
   }
 
   [data-category-button][data-active="true"] {
-    border-color: color-mix(in srgb, var(--accent-green) 32%, var(--border));
-    background: color-mix(in srgb, var(--accent-green) 10%, var(--surface));
+    border-color: color-mix(in srgb, var(--accent-green) 36%, var(--border));
+    background: color-mix(in srgb, var(--accent-green) 16%, white);
     color: color-mix(in srgb, var(--accent-green) 72%, black);
-    box-shadow: 0 1px 0 color-mix(in srgb, var(--accent-green) 15%, transparent) inset;
+    box-shadow: none;
   }
 
   [data-pills-wrapper][data-sticky="true"],
   [data-pills-wrapper].is-stuck {
     border-color: color-mix(in srgb, var(--border) 72%, transparent);
-    background: color-mix(in srgb, var(--surface) 84%, transparent);
+    background: color-mix(in srgb, var(--section-base) 88%, transparent);
     box-shadow: 0 10px 24px -20px color-mix(in srgb, black 45%, transparent);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);

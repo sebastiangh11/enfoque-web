@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Container from "../components/Container.astro";
+import ProcessPreview from "../components/ProcessPreview.astro";
+---
+
+<BaseLayout
+  title="Nuestro proceso de ejecución sin fricción | Enfoque"
+  description="Brief, diseño, producción, instalación y seguimiento: un flujo claro para proyectos físicos corporativos."
+  pathname="/proceso"
+>
+  <Nav />
+
+  <main>
+    <section class="section-bg section-shell" aria-labelledby="proceso-page-heading">
+      <Container class="section-panel relative py-10 md:py-12">
+        <header class="mx-auto max-w-3xl text-center">
+          <p class="text-xs font-semibold uppercase tracking-[0.32em] text-brand-blue">PROCESO</p>
+          <h1 id="proceso-page-heading" class="mt-3 text-3xl font-bold tracking-tight text-text-primary md:text-5xl">
+            Nuestro proceso de ejecución sin fricción
+          </h1>
+          <p class="mt-4 text-base leading-relaxed text-text-secondary md:text-lg">
+            Brief, diseño, producción, instalación y seguimiento con control operativo para proyectos corporativos.
+          </p>
+        </header>
+      </Container>
+    </section>
+
+    <ProcessPreview />
+  </main>
+</BaseLayout>

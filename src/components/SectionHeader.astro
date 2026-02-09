@@ -1,0 +1,33 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  titleStart: string;
+  accent: string;
+  titleEnd?: string;
+  subtitle: string;
+  align?: "left" | "center";
+  class?: string;
+}
+
+const {
+  id,
+  label,
+  titleStart,
+  accent,
+  titleEnd = "",
+  subtitle,
+  align = "center",
+  class: className = "",
+} = Astro.props;
+---
+
+<header class:list={[align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-2xl", className]}>
+  <p class="section-label">{label}</p>
+  <h2 id={id} class="section-title">
+    {titleStart}
+    <span class="accent-underline">{accent}</span>
+    {titleEnd}
+  </h2>
+  <p class="section-subtitle">{subtitle}</p>
+</header>

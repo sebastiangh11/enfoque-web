@@ -4,13 +4,11 @@ import Container from "./Container.astro";
 const whatsappBaseUrl = "https://wa.me/525574570826";
 ---
 
-<section id="contacto" class="relative overflow-hidden border-t border-border py-20 md:py-24">
-  <div
-    class="pointer-events-none absolute inset-0 opacity-95 [background:radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_10%,white),transparent_45%),radial-gradient(circle_at_86%_0%,color-mix(in_srgb,var(--brand-orange)_6%,white),transparent_36%),linear-gradient(180deg,white_0%,color-mix(in_srgb,var(--brand-orange)_3%,white)_100%)]"
-    aria-hidden="true"
-  ></div>
+<section id="contacto" class="section-bg section-orange-blue relative overflow-hidden">
+  <div class="section-glow absolute inset-0 [--section-orange-glow:10%] [--section-green-glow:8%]" aria-hidden="true"></div>
+  <div class="section-grid section-grid-soft absolute inset-0 opacity-80" aria-hidden="true"></div>
 
-  <Container class="relative">
+  <Container class="section-panel relative py-10 md:py-12">
     <div class="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-start lg:gap-12">
       <div class="space-y-8">
         <div class="space-y-4">
@@ -24,7 +22,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
         </div>
 
         <ul class="grid gap-3 text-sm text-text-secondary sm:grid-cols-2">
-          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+          <li class="ui-interactive flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M3 7h18M3 12h18M3 17h18" />
@@ -32,7 +30,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             </span>
             <span>Atendemos corporativos y PYMEs</span>
           </li>
-          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+          <li class="ui-interactive flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M5 13l4 4L19 7" />
@@ -40,7 +38,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             </span>
             <span>Calidad premium</span>
           </li>
-          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+          <li class="ui-interactive flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M13 5l7 7-7 7M4 12h16" />
@@ -48,7 +46,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             </span>
             <span>Producción rápida</span>
           </li>
-          <li class="flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
+          <li class="ui-interactive flex items-center gap-3 rounded-xl border border-border/80 bg-surface/85 px-4 py-3 backdrop-blur-sm">
             <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M12 6v12m6-6H6" />
@@ -63,7 +61,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
           <div class="mt-4 flex flex-wrap gap-3">
             <a
               href="mailto:ventas@segac.com.mx"
-              class="inline-flex items-center gap-2 rounded-full border border-border bg-surface-soft px-4 py-2.5 text-sm font-semibold text-text-secondary transition-colors hover:border-brand-blue hover:text-brand-blue"
+              class="ui-interactive inline-flex items-center gap-2 rounded-xl border border-border bg-surface-soft px-4 py-2.5 text-sm font-semibold text-text-secondary hover:border-brand-blue hover:text-brand-blue"
             >
               <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7l8.2 5.6a1.5 1.5 0 001.6 0L21 7M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" />
@@ -74,7 +72,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               href={whatsappBaseUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-full border border-accent-green/40 bg-accent-green/5 px-4 py-2.5 text-sm font-semibold text-accent-green transition-colors hover:border-accent-green hover:bg-accent-green/10"
+              class="ui-interactive inline-flex items-center gap-2 rounded-xl border border-accent-green/40 bg-accent-green/5 px-4 py-2.5 text-sm font-semibold text-accent-green hover:border-accent-green hover:bg-accent-green/10"
             >
               <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
@@ -184,7 +182,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
             <button
               type="submit"
               data-submit-button
-              class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-6 py-4 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-orange-hover hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              class="ui-interactive inline-flex w-full items-center justify-center rounded-xl bg-brand-orange px-6 py-4 text-sm font-semibold text-white hover:bg-brand-orange-hover focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             >
               <span data-submit-label>Enviar solicitud de cotización</span>
             </button>
@@ -193,7 +191,7 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
               target="_blank"
               rel="noopener noreferrer"
               data-whatsapp-link
-              class="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-accent-green bg-accent-green px-6 py-4 text-sm font-semibold text-white transition-colors hover:border-[#00853a] hover:bg-[#00853a] focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+              class="ui-interactive inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-accent-green bg-accent-green px-6 py-4 text-sm font-semibold text-white hover:border-[#00853a] hover:bg-[#00853a] focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
             >
               <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
@@ -220,6 +218,9 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
   const feedback = document.querySelector("[data-form-feedback]");
   const defaultSubmitText = submitLabel?.textContent || "Enviar solicitud de cotización";
   const hubspotLeadEndpoint = "/api/hubspot/lead.json";
+  const searchParams = new URLSearchParams(window.location.search);
+  const prefilledMessage = searchParams.get("mensaje");
+  const shouldFocusContactForm = searchParams.has("catalogo") || Boolean(prefilledMessage);
 
   const getFieldValue = (name) => {
     if (!form) return "";
@@ -275,6 +276,42 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
       website: getFieldValue("website"),
     };
   };
+
+  const hydrateCatalogIntent = () => {
+    if (!form) return;
+
+    const nameField = form.querySelector('input[name="nombre"]');
+    const messageField = form.querySelector('textarea[name="mensaje"]');
+
+    if (messageField instanceof HTMLTextAreaElement && prefilledMessage && !messageField.value.trim()) {
+      messageField.value = prefilledMessage;
+    }
+
+    if (!shouldFocusContactForm) return;
+
+    window.requestAnimationFrame(() => {
+      if (messageField instanceof HTMLTextAreaElement) {
+        messageField.focus({ preventScroll: true });
+        messageField.setSelectionRange(messageField.value.length, messageField.value.length);
+        return;
+      }
+
+      if (nameField instanceof HTMLInputElement) {
+        nameField.focus({ preventScroll: true });
+      }
+    });
+
+    if (window.history?.replaceState) {
+      const nextParams = new URLSearchParams(window.location.search);
+      nextParams.delete("catalogo");
+      nextParams.delete("mensaje");
+      const queryString = nextParams.toString();
+      const cleanedUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}${window.location.hash || "#contacto"}`;
+      window.history.replaceState({}, document.title, cleanedUrl);
+    }
+  };
+
+  hydrateCatalogIntent();
 
   if (whatsappLink) {
     whatsappLink.addEventListener("click", () => {

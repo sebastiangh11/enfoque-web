@@ -1,81 +1,231 @@
-<footer class="border-t border-border bg-slate-50">
-  <div class="mx-auto max-w-6xl px-4 py-12 text-sm text-text-secondary sm:px-6 lg:px-8">
-    <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr]">
-      <div class="space-y-4">
-        <div class="text-base font-semibold text-text-primary">Enfoque en Medios Publicitarios</div>
-        <p class="max-w-sm text-sm text-text-secondary">
-          Publicidad impresa premium, producción e instalación para marcas en todo México.
-        </p>
-        <div class="flex items-center gap-3">
-          <a
-            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
-            href="https://facebook.com/"
-            rel="noreferrer"
-            target="_blank"
-            aria-label="Facebook"
-          >
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.05 3.66 9.26 8.44 10v-7.07H7.74v-2.93h2.56V9.41c0-2.52 1.5-3.91 3.8-3.91 1.1 0 2.26.2 2.26.2v2.49h-1.27c-1.25 0-1.64.78-1.64 1.57v1.88h2.8l-.45 2.93h-2.35V22c4.78-.74 8.44-4.95 8.44-9.93z"
-              />
-            </svg>
-          </a>
-          <a
-            class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-secondary transition hover:border-brand-blue hover:text-brand-blue"
-            href="https://linkedin.com/"
-            rel="noreferrer"
-            target="_blank"
-            aria-label="LinkedIn"
-          >
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path
-                d="M20.45 20.45h-3.55v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85v5.5H9.48V9h3.4v1.56h.05c.47-.9 1.62-1.85 3.34-1.85 3.57 0 4.22 2.35 4.22 5.41v6.33zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"
-              />
-            </svg>
-          </a>
-        </div>
-      </div>
+---
+import Container from "./Container.astro";
+import { services } from "../data/services";
 
-      <div class="space-y-4">
-        <div class="text-base font-semibold text-text-primary">Navegación rápida</div>
-        <ul class="space-y-2 text-sm">
-          <li><a class="transition hover:text-brand-blue" href="/#servicios">Servicios</a></li>
-          <li><a class="transition hover:text-brand-blue" href="/#portafolio">Portafolio</a></li>
-          <li><a class="transition hover:text-brand-blue" href="/#proceso">Proceso</a></li>
-          <li><a class="transition hover:text-brand-blue" href="/#nosotros">Nosotros</a></li>
-          <li><a class="transition hover:text-brand-blue" href="/#contacto">Contacto</a></li>
-        </ul>
-      </div>
+type SocialIcon = "facebook" | "instagram" | "linkedin";
 
-      <div class="space-y-5">
-        <div>
-          <div class="text-base font-semibold text-text-primary">Contacto</div>
-          <ul class="mt-3 space-y-2 text-sm">
+interface SocialLink {
+  label: string;
+  icon: SocialIcon;
+  url: string;
+}
+
+const quickLinks = [
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Portafolio", href: "/#portafolio" },
+  { label: "Proceso", href: "/#proceso" },
+  { label: "Nosotros", href: "/#nosotros" },
+  { label: "Contacto", href: "/#contacto" },
+];
+
+const serviceLinks = services.map((service) => ({
+  label: service.name,
+  href: `/servicios/${service.slug}`,
+}));
+
+function normalizeExternalUrl(raw: string): string {
+  const value = raw.trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `https://${value}`;
+}
+
+function getWhatsAppDigits(raw: string): string {
+  const fallback = "52155575470826";
+  const value = raw.trim();
+  if (!value) return fallback;
+
+  const waMatch = value.match(/wa\.me\/([^?]+)/i);
+  if (waMatch?.[1]) {
+    const digits = waMatch[1].replace(/\D/g, "");
+    if (digits) return digits;
+  }
+
+  try {
+    const normalized = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+    const parsed = new URL(normalized);
+    const phoneFromQuery = parsed.searchParams.get("phone");
+    if (phoneFromQuery) {
+      const digits = phoneFromQuery.replace(/\D/g, "");
+      if (digits) return digits;
+    }
+
+    const digitsFromHost = parsed.hostname.replace(/\D/g, "");
+    if (digitsFromHost && !parsed.hostname.includes(".")) return digitsFromHost;
+
+    const digitsFromPath = parsed.pathname.replace(/\D/g, "");
+    if (digitsFromPath) return digitsFromPath;
+  } catch {
+    const digits = value.replace(/\D/g, "");
+    if (digits) return digits;
+  }
+
+  return fallback;
+}
+
+const whatsappUrl = import.meta.env.PUBLIC_WHATSAPP_URL ?? "https://wa.me/52155575470826";
+const whatsappDigits = getWhatsAppDigits(whatsappUrl);
+const whatsappBaseUrl = `https://wa.me/${whatsappDigits}`;
+const whatsappCtaUrl = `${whatsappBaseUrl}?text=${encodeURIComponent(
+  "Hola, quiero cotizar un proyecto con Enfoque en Medios Publicitarios."
+)}`;
+
+const catalogMessage = "Hola, me gustaría solicitar el catálogo. Mi empresa es: ____";
+const catalogCtaUrl = `/?catalogo=1&mensaje=${encodeURIComponent(catalogMessage)}#contacto`;
+const footerYear = 2026;
+
+const socialLinks: SocialLink[] = [
+  { label: "Instagram", icon: "instagram", url: normalizeExternalUrl(import.meta.env.PUBLIC_INSTAGRAM_URL ?? "https://instagram.com") },
+  { label: "Facebook", icon: "facebook", url: normalizeExternalUrl(import.meta.env.PUBLIC_FACEBOOK_URL ?? "https://facebook.com") },
+  { label: "LinkedIn", icon: "linkedin", url: normalizeExternalUrl(import.meta.env.PUBLIC_LINKEDIN_URL ?? "https://linkedin.com") },
+];
+---
+
+<footer
+  class="relative bg-[rgb(46_42_123_/_0.06)]"
+  aria-labelledby="footer-title"
+>
+  <Container class="relative z-10 py-10 md:py-12">
+    <h2 id="footer-title" class="sr-only">Información de la empresa y contacto</h2>
+
+    <div class="section-panel px-5 py-8 md:px-8 md:py-10">
+      <div class="grid gap-10 md:grid-cols-[1.05fr_1fr_1fr] md:gap-8">
+        <section aria-label="Marca">
+          <h3 class="text-lg font-semibold text-text-primary">Enfoque en Medios Publicitarios</h3>
+          <p class="mt-3 max-w-sm text-sm leading-relaxed text-text-secondary">
+            Publicidad impresa, producción e instalación para empresas en México.
+          </p>
+          <p class="mt-3 text-sm text-text-secondary">José María Roa Bárcenas 5, CDMX</p>
+
+          <div class="mt-5 flex items-center justify-center gap-2.5 md:justify-start">
+            {socialLinks.map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visitar ${social.label}`}
+                class="ui-interactive inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/75 text-text-secondary opacity-85 shadow-sm hover:opacity-100 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                {social.icon === "facebook" && (
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.05 3.66 9.26 8.44 10v-7.07H7.74v-2.93h2.56V9.41c0-2.52 1.5-3.91 3.8-3.91 1.1 0 2.26.2 2.26.2v2.49h-1.27c-1.25 0-1.64.78-1.64 1.57v1.88h2.8l-.45 2.93h-2.35V22c4.78-.74 8.44-4.95 8.44-9.93z"></path>
+                  </svg>
+                )}
+                {social.icon === "instagram" && (
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.16c3.2 0 3.58.01 4.84.07 3.24.15 4.76 1.69 4.91 4.9.06 1.26.07 1.65.07 4.84 0 3.19-.01 3.58-.07 4.84-.15 3.2-1.66 4.75-4.9 4.9-1.26.06-1.65.07-4.84.07-3.2 0-3.58-.01-4.84-.07-3.25-.15-4.76-1.7-4.9-4.9-.07-1.26-.08-1.65-.08-4.84 0-3.2.01-3.58.07-4.84.15-3.22 1.67-4.75 4.9-4.9 1.26-.06 1.65-.07 4.84-.07Zm0-2.16C8.74 0 8.34.01 7.06.07 2.7.27.27 2.69.07 7.06.01 8.34 0 8.74 0 12s.01 3.66.07 4.94c.2 4.36 2.63 6.79 7 6.99 1.28.06 1.68.07 4.94.07s3.66-.01 4.94-.07c4.36-.2 6.79-2.63 6.99-7 .06-1.28.07-1.68.07-4.94s-.01-3.66-.07-4.94c-.2-4.36-2.63-6.79-6.99-6.99C15.66.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8Zm6.4-11.85a1.44 1.44 0 1 0 0 2.89 1.44 1.44 0 0 0 0-2.89Z"></path>
+                  </svg>
+                )}
+                {social.icon === "linkedin" && (
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.45 20.45H16.9v-5.4c0-1.29-.03-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85v5.5H9.47V9h3.4v1.56h.05c.47-.9 1.62-1.85 3.34-1.85 3.57 0 4.22 2.35 4.22 5.41v6.33ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"></path>
+                  </svg>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section aria-label="Navegación y servicios">
+          <h3 class="text-base font-semibold text-text-primary">Navegación rápida</h3>
+          <ul class="mt-4 space-y-2.5 text-sm text-text-secondary">
+            {quickLinks.map((link) => (
+              <li>
+                <a href={link.href} class="footer-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div class="mt-6">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">Servicios</p>
+            <ul class="mt-3 space-y-2 text-sm text-text-secondary">
+              {serviceLinks.map((link) => (
+                <li>
+                  <a href={link.href} class="footer-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-label="Contacto y acciones">
+          <h3 class="text-base font-semibold text-text-primary">Contacto</h3>
+          <ul class="mt-4 space-y-2.5 text-sm text-text-secondary">
             <li>CDMX · Cobertura nacional</li>
             <li>
-              <a class="transition hover:text-brand-blue" href="mailto:ventas@segac.com.mx">
+              <a
+                href="mailto:ventas@segac.com.mx"
+                class="footer-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
                 ventas@segac.com.mx
               </a>
             </li>
             <li>
-              <a class="transition hover:text-brand-blue" href="tel:+5255XXXXXXXX">+52 55 XXXX XXXX</a>
+              <a
+                href={whatsappBaseUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="footer-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
+                WhatsApp · +52 55 7457 0826
+              </a>
             </li>
           </ul>
+          <p class="mt-3 text-sm text-text-secondary">Respuesta en menos de 24 hrs hábiles.</p>
+
+          <div class="mt-6 grid gap-3">
+            <a
+              href={whatsappCtaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ui-interactive inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border-2 border-accent-green bg-accent-green px-6 py-3 text-sm font-semibold text-white shadow-sm hover:border-[#00853a] hover:bg-[#00853a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path>
+                <path d="M12.051 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.86 9.86 0 0 1 9.881 9.892c-.003 5.45-4.437 9.884-9.885 9.884z"></path>
+              </svg>
+              Cotizar por WhatsApp
+            </a>
+
+            <a
+              href={catalogCtaUrl}
+              class="ui-interactive inline-flex min-h-11 w-full items-center justify-center rounded-xl border-2 border-brand-blue/30 bg-white/75 px-6 py-3 text-sm font-semibold text-brand-blue shadow-sm hover:border-brand-blue hover:bg-brand-blue/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              Solicitar catálogo
+            </a>
+          </div>
+        </section>
+      </div>
+
+      <div class="mt-8 border-t border-brand-blue/8 pt-5">
+        <div class="flex flex-col gap-2 text-sm text-text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {footerYear} Enfoque en Medios Publicitarios.</p>
+          <a
+            href="/aviso-de-privacidad"
+            class="footer-link w-fit font-semibold text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            Aviso de privacidad
+          </a>
         </div>
-        <a
-          class="inline-flex w-full items-center justify-center rounded-full bg-brand-orange px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-orange/90"
-          href={import.meta.env.PUBLIC_WHATSAPP_URL}
-        >
-          Hablar por WhatsApp
-        </a>
       </div>
     </div>
-  </div>
-
-  <div class="border-t border-border">
-    <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-      <span>© 2026 Enfoque en Medios Publicitarios.</span>
-      <a class="transition hover:text-brand-blue" href="#">Aviso de privacidad</a>
-    </div>
-  </div>
+  </Container>
 </footer>
+
+<style>
+  .footer-link {
+    display: inline-flex;
+    color: inherit;
+    transition: color 220ms ease, transform 220ms ease;
+  }
+
+  .footer-link:hover,
+  .footer-link:focus-visible {
+    color: var(--brand-blue);
+    transform: translateY(-2px);
+  }
+</style>

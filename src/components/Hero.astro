@@ -51,10 +51,14 @@ const carouselImages = [
 ];
 ---
 
-<section class="hero relative overflow-hidden py-20 md:py-28 lg:py-32" aria-labelledby="hero-heading">
-  <div class="hero-bg absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+<section class="hero section-bg section-blue-orange relative overflow-hidden" aria-labelledby="hero-heading">
+  <div
+    class="section-glow absolute inset-0 [--section-orange-glow:11%] [--section-green-glow:9%]"
+    aria-hidden="true"
+  ></div>
+  <div class="section-grid section-grid-hero absolute inset-0" aria-hidden="true"></div>
 
-  <Container class="relative">
+  <Container class="section-panel relative py-10 md:py-12">
     <div class="lg:grid lg:grid-cols-12 lg:gap-12 xl:gap-16 lg:items-center">
       <div class="text-center lg:text-left lg:col-span-6">
         <h1
@@ -62,7 +66,7 @@ const carouselImages = [
           class="text-4xl font-bold tracking-tight leading-[1.06] text-text-primary md:text-5xl lg:text-6xl"
         >
           Publicidad impresa para que tu marca se vea
-          <span class="hero-marker">gigante</span>.
+          <span class="accent-underline">gigante</span>.
         </h1>
 
         <p class="mx-auto mt-6 max-w-xl text-lg text-text-secondary md:text-xl lg:mx-0">
@@ -75,7 +79,7 @@ const carouselImages = [
             data-cta="hero-quote"
             data-source="hero"
             aria-label="Cotizar proyecto con Enfoque"
-            class="inline-flex h-11 items-center justify-center rounded-xl bg-brand-orange px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-orange-hover hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+            class="ui-interactive inline-flex h-11 items-center justify-center rounded-xl bg-brand-orange px-6 text-sm font-semibold text-white shadow-sm hover:bg-brand-orange-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           >
             Cotizar proyecto
           </a>
@@ -87,7 +91,7 @@ const carouselImages = [
             data-cta="hero-whatsapp"
             data-source="hero"
             aria-label="Escribir por WhatsApp a Enfoque"
-            class="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#009640] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#007f37] hover:shadow-md hover:shadow-[#009640]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009640] focus-visible:ring-offset-2"
+            class="ui-interactive inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#009640] px-5 text-sm font-semibold text-white shadow-sm hover:bg-[#007f37] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009640] focus-visible:ring-offset-2"
           >
             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true">
               <path d="M12 2a10 10 0 0 0-8.66 15L2 22l5.14-1.33A10 10 0 1 0 12 2Zm5.68 14.2c-.24.66-1.38 1.23-1.9 1.3-.49.06-1.11.09-1.79-.13-.41-.13-.93-.3-1.6-.58-2.81-1.2-4.64-4.1-4.78-4.3-.14-.2-1.14-1.52-1.14-2.9 0-1.38.72-2.05.98-2.33.26-.29.56-.36.75-.36.19 0 .38 0 .54.01.17.01.4-.06.63.49.24.57.82 1.96.89 2.1.07.14.12.31.02.5-.1.19-.15.31-.3.48-.14.17-.3.38-.43.5-.14.14-.28.29-.12.57.17.28.74 1.22 1.58 1.98 1.08.96 1.99 1.25 2.27 1.39.28.14.44.12.6-.07.17-.19.72-.84.91-1.12.19-.29.38-.24.63-.14.26.09 1.63.77 1.91.92.28.14.47.21.54.33.07.12.07.69-.17 1.35Z" />
@@ -102,7 +106,7 @@ const carouselImages = [
             data-cta="hero-catalog"
             data-source="hero"
             aria-label="Solicitar catálogo en WhatsApp"
-            class="inline-flex h-11 items-center justify-center rounded-xl border border-border bg-transparent px-5 text-sm font-semibold text-text-primary transition hover:border-brand-blue hover:text-brand-blue hover:bg-surface/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+            class="ui-interactive inline-flex h-11 items-center justify-center rounded-xl border border-border bg-surface/70 px-5 text-sm font-semibold text-text-primary hover:border-brand-blue hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
           >
             Solicitar catálogo
           </a>
@@ -304,30 +308,6 @@ const carouselImages = [
 </script>
 
 <style>
-  .hero-bg {
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--brand-blue) 8%, transparent) 0%,
-        transparent 50%
-      ),
-      linear-gradient(
-        225deg,
-        color-mix(in srgb, var(--brand-orange) 5%, transparent) 0%,
-        transparent 40%
-      ),
-      linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--brand-blue) 3%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        color-mix(in srgb, var(--brand-blue) 3%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
-  }
-
   .hero-visual-card-border {
     padding: 1px;
     border-radius: 1.5rem;
@@ -340,24 +320,6 @@ const carouselImages = [
 
   .hero-visual-card-border > div {
     border-radius: calc(1.5rem - 1px);
-  }
-
-  .hero-marker {
-    position: relative;
-    display: inline-block;
-    z-index: 0;
-  }
-
-  .hero-marker::after {
-    content: "";
-    position: absolute;
-    left: -0.08em;
-    right: -0.08em;
-    bottom: 0.08em;
-    height: 0.26em;
-    border-radius: 0.3em;
-    background: color-mix(in srgb, var(--brand-orange) 52%, transparent);
-    z-index: -1;
   }
 
   .hero-visual-card {
