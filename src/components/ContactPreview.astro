@@ -284,8 +284,6 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
 
   const getPayload = () => {
     const tipoProyecto = getFieldValue("tipoProyecto");
-    const mensaje = getFieldValue("mensaje");
-    const mensajeCompleto = tipoProyecto ? `[Tipo de proyecto: ${tipoProyecto}]\n${mensaje}` : mensaje;
 
     return {
       nombre: getFieldValue("nombre"),
@@ -293,7 +291,9 @@ const whatsappBaseUrl = "https://wa.me/525574570826";
       telefono_whatsapp: getFieldValue("telefono_whatsapp"),
       email: getFieldValue("email"),
       ciudad_estado: getFieldValue("ciudad_estado"),
-      mensaje: mensajeCompleto,
+      servicio: tipoProyecto,
+      tipoProyecto,
+      mensaje: getFieldValue("mensaje"),
       website: getFieldValue("website"),
     };
   };

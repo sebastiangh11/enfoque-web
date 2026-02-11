@@ -14,9 +14,9 @@ Landing site built with Astro and deployed on Vercel.
 ## HubSpot Lead Integration
 
 The contact form submits to `POST /api/hubspot/lead.json` (server-side Astro endpoint).
-The endpoint upserts Contact, optionally upserts Company, creates a Deal, and sends an internal email notification via Resend (if configured).
+The endpoint upserts Contact, optionally upserts Company, creates a Deal, sends an internal email notification, and sends a user confirmation email when `email` is provided.
 
-### 1) Environment variables
+### 1) Local environment variables
 
 Copy `.env.example` to `.env` locally and configure:
 
@@ -25,27 +25,21 @@ HUBSPOT_PRIVATE_APP_TOKEN=your-hubspot-private-app-token
 HUBSPOT_PIPELINE_ID=default
 HUBSPOT_STAGE_ID=your-deal-stage-id
 RESEND_API_KEY=your-resend-api-key
-LEAD_NOTIFY_TO=sebastian@segac.com.mx
-LEAD_NOTIFY_FROM=onboarding@resend.dev
+RESEND_FROM_EMAIL=hola@enfoquemedios.com.mx
+RESEND_INTERNAL_EMAIL=sebastian@segac.com.mx
 ```
 
-`LEAD_NOTIFY_FROM` can stay as `onboarding@resend.dev` while you are on Resend testing/free mode.
-When you buy and configure your domain DNS, switch it to your verified sender.
+`RESEND_FROM_EMAIL` must be a verified sender/domain in Resend.
+`RESEND_INTERNAL_EMAIL` is the inbox that receives the internal lead notification.
 
-### 2) Vercel setup
+### 2) Run locally
 
-1. Open your Vercel project.
-2. Go to `Project Settings > Environment Variables`.
-3. Add:
-   - `HUBSPOT_PRIVATE_APP_TOKEN`
-   - `HUBSPOT_PIPELINE_ID`
-   - `HUBSPOT_STAGE_ID`
-   - `RESEND_API_KEY`
-   - `LEAD_NOTIFY_TO`
-   - `LEAD_NOTIFY_FROM`
-4. Redeploy the project so serverless functions receive the new values.
+```bash
+npm install
+npm run dev
+```
 
-## API Test (curl)
+### 3) Local API test (curl)
 
 Run against local dev server (`npm run dev`):
 
@@ -58,22 +52,7 @@ curl -X POST "http://localhost:4321/api/hubspot/lead.json" \
     "telefono_whatsapp": "+52 55 7457 0826",
     "email": "juan@apple.com",
     "ciudad_estado": "CDMX",
-    "mensaje": "Necesito branding físico para evento corporativo.",
-    "website": ""
-  }'
-```
-
-Run against production (replace with your real domain):
-
-```bash
-curl -X POST "https://your-domain.com/api/hubspot/lead.json" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "nombre": "Juan Perez",
-    "empresa": "Apple",
-    "telefono_whatsapp": "+52 55 7457 0826",
-    "email": "juan@apple.com",
-    "ciudad_estado": "CDMX",
+    "que_necesitas_producir": "Branding físico",
     "mensaje": "Necesito branding físico para evento corporativo.",
     "website": ""
   }'
@@ -88,6 +67,7 @@ Expected result in HubSpot:
    - Deal <-> Company (if company exists)
    - Contact <-> Company (if company exists)
 
-Expected API response includes `notifyEmailSent`:
-- `true` when Resend notification email was sent.
-- `false` when `RESEND_API_KEY` is missing or notification sending fails (HubSpot lead creation still returns `ok: true`).
+Expected API response includes:
+- `data` with `contactId`, `companyId` (if any), `dealId`
+- `email.internalSent` and `email.userSent`
+- Optional `email.warning` if HubSpot succeeded but Resend failed
